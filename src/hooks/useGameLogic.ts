@@ -164,10 +164,16 @@ const useGameLogic = ({
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [timeLeft, settings.timerEnabled, feedback, currentItem]);
+  }, [
+    timeLeft,
+    settings.timerEnabled,
+    feedback,
+    currentItem,
+    generateQuestion,
+    handleTimeUp,
+  ]);
 
   return {
-    currentPhrase: currentItem, // for backward compatibility
     currentItem,
     options,
     score,
