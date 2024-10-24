@@ -60,7 +60,9 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
         <h2 className="text-2xl font-bold text-primary mb-2">
           Choose a Category
         </h2>
-        <p className="text-gray-600">Select what you'd like to learn today</p>
+        <p className="text-gray-600">
+          Select what you&apos;d like to learn today
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
