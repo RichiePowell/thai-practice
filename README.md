@@ -35,7 +35,7 @@ A React-based interactive game for learning Thai phrases. Built with Next.js, Ty
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/thai-language-game.git
+git clone https://github.com/RichiePowell/thai-language-game.git
 cd thai-language-game
 ```
 
