@@ -1,0 +1,151 @@
+// src/constants/content/thaiScript.ts
+import type { CategoryContent, PhraseContent } from "@/types/ContentTypes";
+
+const consonants: PhraseContent[] = [
+  {
+    id: "consonant-1",
+    type: "phrase",
+    difficulty: "beginner",
+    thai: "ก",
+    romanized: "gɔɔ-gài",
+    meaning: 'G/K (as in "go")',
+    // Additional metadata for consonants
+    extra: {
+      wordThai: "ก ไก่",
+      wordMeaning: "chicken",
+      class: "mid-class",
+      sound: "g/k",
+    },
+  },
+  {
+    id: "consonant-2",
+    type: "phrase",
+    difficulty: "beginner",
+    thai: "ข",
+    romanized: "khɔɔ-khài",
+    meaning: "KH (aspirated K)",
+    extra: {
+      wordThai: "ข ไข่",
+      wordMeaning: "egg",
+      class: "high-class",
+      sound: "kh",
+    },
+  },
+  {
+    id: "consonant-3",
+    type: "phrase",
+    difficulty: "beginner",
+    thai: "ค",
+    romanized: "khɔɔ-khwaai",
+    meaning: "KH (aspirated K)",
+    extra: {
+      wordThai: "ค ควาย",
+      wordMeaning: "buffalo",
+      class: "low-class",
+      sound: "kh",
+    },
+  },
+  {
+    id: "consonant-4",
+    type: "phrase",
+    difficulty: "beginner",
+    thai: "ง",
+    romanized: "ngɔɔ-nguu",
+    meaning: 'NG (as in "sing")',
+    extra: {
+      wordThai: "ง งู",
+      wordMeaning: "snake",
+      class: "low-class",
+      sound: "ng",
+    },
+  },
+  {
+    id: "consonant-5",
+    type: "phrase",
+    difficulty: "beginner",
+    thai: "จ",
+    romanized: "jɔɔ-jaan",
+    meaning: 'J/CH (as in "jar")',
+    extra: {
+      wordThai: "จ จาน",
+      wordMeaning: "plate",
+      class: "mid-class",
+      sound: "j/ch",
+    },
+  },
+  {
+    id: "consonant-6",
+    type: "phrase",
+    difficulty: "beginner",
+    thai: "ฉ",
+    romanized: "chɔɔ-ching",
+    meaning: "CH (aspirated)",
+    extra: {
+      wordThai: "ฉ ฉิ่ง",
+      wordMeaning: "cymbals",
+      class: "high-class",
+      sound: "ch",
+    },
+  },
+  {
+    id: "consonant-7",
+    type: "phrase",
+    difficulty: "beginner",
+    thai: "ช",
+    romanized: "chɔɔ-chaang",
+    meaning: "CH (aspirated)",
+    extra: {
+      wordThai: "ช ช้าง",
+      wordMeaning: "elephant",
+      class: "low-class",
+      sound: "ch",
+    },
+  },
+  {
+    id: "consonant-8",
+    type: "phrase",
+    difficulty: "beginner",
+    thai: "ซ",
+    romanized: "sɔɔ-soo",
+    meaning: 'S (as in "so")',
+    extra: {
+      wordThai: "ซ โซ่",
+      wordMeaning: "chain",
+      class: "low-class",
+      sound: "s",
+    },
+  },
+  {
+    id: "consonant-9",
+    type: "phrase",
+    difficulty: "beginner",
+    thai: "ญ",
+    romanized: "yɔɔ-ying",
+    meaning: 'Y (as in "yes")',
+    extra: {
+      wordThai: "ญ หญิง",
+      wordMeaning: "woman",
+      class: "low-class",
+      sound: "y",
+    },
+  },
+  {
+    id: "consonant-10",
+    type: "phrase",
+    difficulty: "beginner",
+    thai: "ฎ",
+    romanized: "dɔɔ-cha-daa",
+    meaning: 'D (as in "day")',
+    extra: {
+      wordThai: "ฎ ชฎา",
+      wordMeaning: "headdress",
+      class: "mid-class",
+      sound: "d",
+    },
+  },
+];
+
+export const thaiScriptContent: CategoryContent = {
+  categoryId: "thai-script",
+  items: consonants,
+};

@@ -1,45 +1,62 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import type { ThaiPhrase } from "@/types/ThaiPhrase";
+import type { LearningCategory } from "@/types/LearningCategory";
 import type { FeedbackType } from "@/types/FeedbackType";
 import type { GameSettings } from "@/types/GameSettings";
-import { THAI_PHRASES } from "@/constants/phrases";
+import type { ContentItem } from "@/types/ContentTypes";
+import { CATEGORY_CONTENT } from "@/constants/content";
 import { HISTORY_LENGTH } from "@/constants/config";
+import { DEFAULT_SETTINGS } from "@/constants/settings";
 
-const useGameLogic = (
-  settings: GameSettings,
-  onGameOver: (score: number) => void
-) => {
-  const [currentPhrase, setCurrentPhrase] = useState<ThaiPhrase | null>(null);
-  const [options, setOptions] = useState<ThaiPhrase[]>([]);
+interface UseGameLogicParams {
+  settings: GameSettings;
+  onGameOver: (score: number) => void;
+  category: LearningCategory;
+}
+
+const useGameLogic = ({
+  settings = DEFAULT_SETTINGS,
+  onGameOver,
+  category,
+}: UseGameLogicParams) => {
+  const [currentItem, setCurrentItem] = useState<ContentItem | null>(null);
+  const [options, setOptions] = useState<ContentItem[]>([]);
   const [score, setScore] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [feedback, setFeedback] = useState<FeedbackType>(null);
-  const [timeLeft, setTimeLeft] = useState(settings.timerDuration);
+  const [timeLeft, setTimeLeft] = useState(
+    settings?.timerDuration ?? DEFAULT_SETTINGS.timerDuration
+  );
   const [canProceed, setCanProceed] = useState(false);
-  const [questionHistory, setQuestionHistory] = useState<ThaiPhrase[]>([]);
+  const [questionHistory, setQuestionHistory] = useState<string[]>([]); // Store IDs instead of objects
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const generateQuestion = useCallback(() => {
-    const availablePhrases = THAI_PHRASES.filter(
-      (phrase) => !questionHistory.includes(phrase)
+    const categoryContent = CATEGORY_CONTENT[category.id];
+    if (!categoryContent) return;
+
+    // Filter using IDs instead of objects
+    const availableItems = categoryContent.items.filter(
+      (item) => !questionHistory.includes(item.id)
     );
 
-    const phrasesToUse =
-      availablePhrases.length > 0
-        ? availablePhrases
-        : THAI_PHRASES.filter((phrase) => phrase !== currentPhrase);
+    const itemsToUse =
+      availableItems.length > 0
+        ? availableItems
+        : categoryContent.items.filter((item) => item.id !== currentItem?.id);
 
-    const randomIndex = Math.floor(Math.random() * phrasesToUse.length);
-    const correct = phrasesToUse[randomIndex];
+    const randomIndex = Math.floor(Math.random() * itemsToUse.length);
+    const correct = itemsToUse[randomIndex];
 
+    // Update history with IDs
     setQuestionHistory((prev) => {
-      const newHistory = [...prev, correct];
+      const newHistory = [...prev, correct.id];
       return newHistory.slice(-HISTORY_LENGTH);
     });
 
-    const wrongOptions = THAI_PHRASES.filter((phrase) => phrase !== correct)
+    const wrongOptions = categoryContent.items
+      .filter((item) => item.id !== correct.id)
       .sort(() => 0.5 - Math.random())
       .slice(0, 3);
 
@@ -47,7 +64,7 @@ const useGameLogic = (
       () => 0.5 - Math.random()
     );
 
-    setCurrentPhrase(correct);
+    setCurrentItem(correct);
     setOptions(allOptions);
     setFeedback(null);
     setCanProceed(false);
@@ -55,34 +72,59 @@ const useGameLogic = (
     if (settings.timerEnabled) {
       setTimeLeft(settings.timerDuration);
     }
-  }, [questionHistory, settings.timerDuration, settings.timerEnabled]);
+  }, [
+    category.id,
+    currentItem?.id,
+    questionHistory,
+    settings.timerDuration,
+    settings.timerEnabled,
+  ]);
 
   const handleTimeUp = () => {
-    if (!currentPhrase) return;
+    if (!currentItem) return;
 
     setFeedback({
       correct: false,
-      message: `Time's up! The answer was "${currentPhrase.thai}" (${currentPhrase.romanized})`,
+      message:
+        currentItem.type === "phrase"
+          ? `Time's up! The answer was "${currentItem.thai}" (${currentItem.romanized})`
+          : "Time's up!",
     });
     setCanProceed(true);
   };
 
-  const handleAnswer = (selected: ThaiPhrase) => {
-    if (feedback || !currentPhrase) return;
+  const handleAnswer = (selected: ContentItem) => {
+    if (feedback || !currentItem) return;
 
     if (timerRef.current) clearTimeout(timerRef.current);
 
-    if (selected === currentPhrase) {
+    const isCorrect = selected.id === currentItem.id;
+
+    if (isCorrect) {
       setScore((prev) => prev + 1);
-      setFeedback({
-        correct: true,
-        message: `Correct! "${currentPhrase.thai}" (${currentPhrase.romanized})`,
-      });
+      if (currentItem.type === "phrase") {
+        setFeedback({
+          correct: true,
+          message: `Correct! "${currentItem.thai}" (${currentItem.romanized})`,
+        });
+      } else {
+        setFeedback({
+          correct: true,
+          message: "Correct!",
+        });
+      }
     } else {
-      setFeedback({
-        correct: false,
-        message: `Incorrect. The answer was "${currentPhrase.thai}" (${currentPhrase.romanized})`,
-      });
+      if (currentItem.type === "phrase") {
+        setFeedback({
+          correct: false,
+          message: `Incorrect. The answer was "${currentItem.thai}" (${currentItem.romanized})`,
+        });
+      } else {
+        setFeedback({
+          correct: false,
+          message: "Incorrect!",
+        });
+      }
     }
     setCanProceed(true);
   };
@@ -114,7 +156,7 @@ const useGameLogic = (
       settings.timerEnabled &&
       timeLeft === 0 &&
       !feedback &&
-      currentPhrase
+      currentItem
     ) {
       handleTimeUp();
     }
@@ -122,10 +164,11 @@ const useGameLogic = (
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [timeLeft, settings.timerEnabled, feedback, currentPhrase]);
+  }, [timeLeft, settings.timerEnabled, feedback, currentItem]);
 
   return {
-    currentPhrase,
+    currentPhrase: currentItem, // for backward compatibility
+    currentItem,
     options,
     score,
     totalQuestions,

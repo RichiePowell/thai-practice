@@ -9,13 +9,17 @@ import { GameScreen } from "./GameScreen";
 import type { GameSettings } from "@/types/GameSettings";
 import { DEFAULT_SETTINGS } from "@/constants/settings";
 import { Logo } from "../ui/logo";
+import { LearningCategory } from "@/types/LearningCategory";
+import { CategorySelector } from "./CategorySelector";
 
-type GameState = "menu" | "playing" | "gameOver";
+type GameState = "menu" | "category-select" | "playing" | "gameOver";
 
 export const ThaiPhraseGame = () => {
   const [gameState, setGameState] = useState<GameState>("menu");
   const [settings, setSettings] = useState<GameSettings>(DEFAULT_SETTINGS);
   const [finalScore, setFinalScore] = useState(0);
+  const [selectedCategory, setSelectedCategory] =
+    useState<LearningCategory | null>(null);
 
   const handleGameOver = (score: number) => {
     setFinalScore(score);
@@ -38,15 +42,25 @@ export const ThaiPhraseGame = () => {
       <CardContent>
         {gameState === "menu" && (
           <MainMenu
-            onStartGame={handleStartGame}
+            onStartGame={() => setGameState("category-select")}
             settings={settings}
             onSettingsChange={setSettings}
           />
         )}
 
-        {gameState === "playing" && (
+        {gameState === "category-select" && (
+          <CategorySelector
+            onSelect={(category) => {
+              setSelectedCategory(category);
+              setGameState("playing");
+            }}
+          />
+        )}
+
+        {gameState === "playing" && selectedCategory && (
           <GameScreen
             settings={settings}
+            category={selectedCategory}
             onGameOver={handleGameOver}
             onReturnToMenu={handleReturnToMenu}
           />
