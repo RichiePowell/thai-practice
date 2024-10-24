@@ -8,6 +8,7 @@ import { MainMenu } from "./MainMenu";
 import { GameScreen } from "./GameScreen";
 import type { GameSettings } from "@/types/GameSettings";
 import { DEFAULT_SETTINGS } from "@/constants/settings";
+import { Logo } from "../ui/logo";
 
 type GameState = "menu" | "playing" | "gameOver";
 
@@ -32,9 +33,7 @@ export const ThaiPhraseGame = () => {
   return (
     <Card className="w-full max-w-2xl mx-auto shadow-lg">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">
-          Learn Thai Phrases
-        </CardTitle>
+        <Logo />
       </CardHeader>
       <CardContent>
         {gameState === "menu" && (
