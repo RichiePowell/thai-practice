@@ -26,10 +26,6 @@ export const ThaiPhraseGame = () => {
     setGameState("gameOver");
   };
 
-  const handleStartGame = () => {
-    setGameState("playing");
-  };
-
   const handleReturnToMenu = () => {
     setGameState("menu");
   };

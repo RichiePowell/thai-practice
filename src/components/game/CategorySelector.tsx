@@ -48,7 +48,7 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
       <div className="text-center p-8">
         <h2 className="text-2xl font-bold text-primary mb-4">Coming Soon!</h2>
         <p className="text-gray-600">
-          We're working on adding learning content.
+          We&apos;re working on adding learning content.
         </p>
       </div>
     );

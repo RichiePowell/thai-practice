@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Check, X, Timer, Volume2, Home } from "lucide-react";
 import type { GameSettings } from "@/types/GameSettings";
 import type { LearningCategory } from "@/types/LearningCategory";
-import type { ContentItem } from "@/types/ContentTypes";
 import useGameLogic from "@/hooks/useGameLogic";
 
 interface GameScreenProps {
