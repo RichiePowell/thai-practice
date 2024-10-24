@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import type { ThaiPhrase } from "@/types/ThaiPhrase";
 import type { FeedbackType } from "@/types/FeedbackType";
 import type { GameSettings } from "@/types/GameSettings";
 import { THAI_PHRASES } from "@/constants/phrases";
 import { HISTORY_LENGTH } from "@/constants/config";
 
-// Change from 'export const' to 'export default'
 const useGameLogic = (
   settings: GameSettings,
   onGameOver: (score: number) => void
@@ -22,7 +21,7 @@ const useGameLogic = (
   const [questionHistory, setQuestionHistory] = useState<ThaiPhrase[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const generateQuestion = () => {
+  const generateQuestion = useCallback(() => {
     const availablePhrases = THAI_PHRASES.filter(
       (phrase) => !questionHistory.includes(phrase)
     );
@@ -40,7 +39,7 @@ const useGameLogic = (
       return newHistory.slice(-HISTORY_LENGTH);
     });
 
-    let wrongOptions = THAI_PHRASES.filter((phrase) => phrase !== correct)
+    const wrongOptions = THAI_PHRASES.filter((phrase) => phrase !== correct)
       .sort(() => 0.5 - Math.random())
       .slice(0, 3);
 
@@ -56,7 +55,7 @@ const useGameLogic = (
     if (settings.timerEnabled) {
       setTimeLeft(settings.timerDuration);
     }
-  };
+  }, [questionHistory, settings.timerDuration, settings.timerEnabled]);
 
   const handleTimeUp = () => {
     if (!currentPhrase) return;
@@ -97,13 +96,15 @@ const useGameLogic = (
     }
   };
 
+  // Initialize game
   useEffect(() => {
     generateQuestion();
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, []);
+  }, []); // Empty dependency array for initialization only
 
+  // Handle timer
   useEffect(() => {
     if (settings.timerEnabled && timeLeft > 0 && !feedback) {
       timerRef.current = setTimeout(() => {
@@ -121,7 +122,7 @@ const useGameLogic = (
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [timeLeft, settings.timerEnabled, feedback]);
+  }, [timeLeft, settings.timerEnabled, feedback, currentPhrase]);
 
   return {
     currentPhrase,
