@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Thai Language Learning Game
+
+A React-based interactive game for learning Thai phrases. Built with Next.js, TypeScript, and Tailwind CSS using the shadcn/ui component library.
+
+## Features
+
+- Interactive quiz format for learning Thai phrases
+- Text-to-speech functionality for Thai pronunciation
+- Customizable game settings:
+  - Adjustable timer duration
+  - Optional romanized text display
+  - Configurable number of questions per round
+- Progress tracking with scores
+- Anti-repetition system to prevent frequent phrase repetition
+- Clean, modern UI with animations and feedback
+- Mobile-responsive design
+
+## Tech Stack
+
+- [Next.js 14](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Lucide Icons](https://lucide.dev/)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 16.8 or later
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/thai-language-game.git
+cd thai-language-game
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn
+```
+
+3. Start the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/
+│   └── page.tsx           # Main app page
+├── components/
+│   ├── game/
+│   │   ├── GameScreen.tsx     # Game interface
+│   │   ├── MainMenu.tsx       # Main menu
+│   │   ├── SettingsPanel.tsx  # Game settings
+│   │   └── ThaiPhraseGame.tsx # Main game component
+│   └── ui/                # shadcn/ui components
+├── constants/
+│   ├── config.ts         # Game configuration
+│   ├── phrases.ts        # Thai phrases data
+│   └── settings.ts       # Default settings
+├── hooks/
+│   └── useGameLogic.ts   # Game logic hook
+└── types/
+    ├── FeedbackType.ts   # Feedback type definitions
+    ├── GameSettings.ts   # Settings type definitions
+    └── ThaiPhrase.ts     # Phrase type definitions
+```
 
-## Learn More
+## Game Features
 
-To learn more about Next.js, take a look at the following resources:
+### Learning Modes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Multiple choice quiz format
+- Thai script with optional romanization
+- Audio pronunciation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Customization
 
-## Deploy on Vercel
+- Timer settings (5-30 seconds)
+- Number of questions per round (5-20)
+- Romanized text toggle
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Anti-Repetition System
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The game implements a history-based system to prevent phrases from repeating too frequently, ensuring a varied learning experience.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Thai phrase data curated for common, practical usage
+- UI design inspired by modern language learning apps
+- Built using the amazing shadcn/ui component library
+
+## Future Enhancements
+
+- [ ] Additional Thai phrases and categories
+- [ ] Different game modes (writing practice, listening comprehension)
+- [ ] Progress tracking across sessions
+- [ ] Difficulty levels
+- [ ] Spaced repetition system
+- [ ] User accounts and progress saving
+- [ ] Leaderboards and achievements

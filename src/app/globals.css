@@ -2,20 +2,85 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Thai flag blue */
+    --primary: 215 100% 25%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Thai red */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Gold accents */
+    --accent: 45 93% 47%;
+    --accent-foreground: 0 0% 0%;
+
+    /* Clean background */
+    --background: 40 33% 96%;
+    --foreground: 215 100% 25%;
+
+    /* Card styling */
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    /* Popover/dropdown styling */
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    /* Secondary elements */
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 215 100% 25%;
+
+    /* Muted elements */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215 25% 27%;
+
+    /* Form elements */
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 215 100% 25%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark theme colors */
+    --background: 215 100% 10%;
+    --foreground: 0 0% 100%;
+
+    --card: 215 100% 15%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 215 100% 15%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 215 100% 25%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 215 100% 20%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 215 100% 20%;
+    --muted-foreground: 215 25% 70%;
+
+    --accent: 45 93% 47%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 215 100% 20%;
+    --input: 215 100% 20%;
+    --ring: 45 93% 47%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

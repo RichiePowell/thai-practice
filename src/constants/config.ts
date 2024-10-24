@@ -1,0 +1,10 @@
+export const HISTORY_LENGTH = 5;
+
+export const GAME_CONFIG = {
+  MIN_TIMER_DURATION: 5,
+  MAX_TIMER_DURATION: 30,
+  TIMER_STEP: 5,
+  MIN_QUESTIONS: 5,
+  MAX_QUESTIONS: 20,
+  QUESTIONS_STEP: 5,
+} as const;
