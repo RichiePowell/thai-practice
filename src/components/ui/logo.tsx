@@ -8,7 +8,9 @@ interface LogoProps {
 
 export const Logo: React.FC<LogoProps> = ({ className = "" }) => {
   return (
-    <div className={`flex flex-col items-center group ${className}`}>
+    <div
+      className={`flex flex-col items-center select-none group ${className}`}
+    >
       <div className="relative w-16 h-16 mb-3">
         {/* Main gradient background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#A51931] via-white to-primary rounded-xl shadow-lg transform rotate-45"></div>
