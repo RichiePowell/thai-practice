@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { AudioProvider } from "@/context/AudioContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { AudioToggle } from "@/components/game/AudioToggle";
+import { ThemeToggle } from "@/components/game/ThemeToggle";
 import { ThemeScript } from "@/components/ThemeScript";
 import "./globals.css";
 import { ReactNode } from "react";
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ThemeProvider>
           <AudioProvider>
             <div className="relative">
+              <ThemeToggle />
               <AudioToggle />
               {children}
             </div>

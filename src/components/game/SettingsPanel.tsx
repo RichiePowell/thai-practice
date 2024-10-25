@@ -19,7 +19,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <Label htmlFor="timer-toggle">Enable Timer</Label>
+        <Label htmlFor="timer-toggle" className="text-foreground">
+          Enable Timer
+        </Label>
         <Switch
           id="timer-toggle"
           checked={settings.timerEnabled}
@@ -30,7 +32,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
       </div>
 
       <div className="space-y-2">
-        <Label>Timer Duration (seconds)</Label>
+        <Label className="text-foreground">Timer Duration (seconds)</Label>
         <Slider
           disabled={!settings.timerEnabled}
           min={GAME_CONFIG.MIN_TIMER_DURATION}
@@ -40,14 +42,17 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
           onValueChange={([value]) =>
             onSettingsChange({ ...settings, timerDuration: value })
           }
+          className="[&>[role=slider]]:bg-primary [&>[role=slider]]:border-primary"
         />
-        <div className="text-right text-sm text-gray-500">
+        <div className="text-right text-sm text-muted-foreground">
           {settings.timerDuration} seconds
         </div>
       </div>
 
       <div className="flex items-center justify-between">
-        <Label htmlFor="romanized-toggle">Show Romanized Text</Label>
+        <Label htmlFor="romanized-toggle" className="text-foreground">
+          Show Romanized Text
+        </Label>
         <Switch
           id="romanized-toggle"
           checked={settings.showRomanized}
@@ -58,7 +63,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
       </div>
 
       <div className="flex items-center justify-between">
-        <Label htmlFor="auto-speak-toggle">Auto-Play Thai Pronunciation</Label>
+        <Label htmlFor="auto-speak-toggle" className="text-foreground">
+          Auto-Play Thai Pronunciation
+        </Label>
         <Switch
           id="auto-speak-toggle"
           checked={settings.autoSpeak}
@@ -69,7 +76,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
       </div>
 
       <div className="space-y-2">
-        <Label>Questions per Round</Label>
+        <Label className="text-foreground">Questions per Round</Label>
         <Slider
           min={GAME_CONFIG.MIN_QUESTIONS}
           max={GAME_CONFIG.MAX_QUESTIONS}
@@ -78,8 +85,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
           onValueChange={([value]) =>
             onSettingsChange({ ...settings, questionsPerRound: value })
           }
+          className="[&>[role=slider]]:bg-primary [&>[role=slider]]:border-primary"
         />
-        <div className="text-right text-sm text-gray-500">
+        <div className="text-right text-sm text-muted-foreground">
           {settings.questionsPerRound} questions
         </div>
       </div>

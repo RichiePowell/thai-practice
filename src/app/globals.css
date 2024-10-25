@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    /* Thai flag blue */
-    --primary: 215 100% 25%;
+    /* Thai flag blue for primary elements */
+    --primary: 222 47% 31%;
     --primary-foreground: 0 0% 100%;
 
     /* Thai red */
@@ -16,66 +16,71 @@
     --accent: 45 93% 47%;
     --accent-foreground: 0 0% 0%;
 
-    /* Clean background */
+    /* Clean background and normal text color */
     --background: 40 33% 96%;
-    --foreground: 215 100% 25%;
+    --foreground: 220 10% 20%;
 
     /* Card styling */
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 220 10% 20%;
 
     /* Popover/dropdown styling */
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 220 10% 20%;
 
     /* Secondary elements */
     --secondary: 210 40% 96.1%;
-    --secondary-foreground: 215 100% 25%;
+    --secondary-foreground: 220 10% 20%;
 
     /* Muted elements */
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215 25% 27%;
+    --muted-foreground: 220 10% 45%;
 
     /* Form elements */
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 215 100% 25%;
+    --ring: 222 47% 31%;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    /* Dark theme colors with Thai-inspired palette */
+    /* Dark theme background and normal text */
     --background: 215 50% 8%;
-    --foreground: 0 0% 100%;
+    --foreground: 210 20% 98%;
 
+    /* Card backgrounds slightly lighter than main background */
     --card: 215 50% 12%;
-    --card-foreground: 0 0% 100%;
+    --card-foreground: 210 20% 98%;
 
+    /* Popover matches card */
     --popover: 215 50% 12%;
-    --popover-foreground: 0 0% 100%;
+    --popover-foreground: 210 20% 98%;
 
-    /* Keep primary Thai blue but slightly lighter for dark mode */
-    --primary: 215 80% 40%;
-    --primary-foreground: 0 0% 100%;
+    /* Brighter primary for dark mode */
+    --primary: 215 80% 70%;
+    --primary-foreground: 215 50% 8%;
 
-    --secondary: 215 50% 15%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary with better contrast */
+    --secondary: 215 50% 20%;
+    --secondary-foreground: 210 20% 98%;
 
-    --muted: 215 50% 15%;
-    --muted-foreground: 215 25% 70%;
+    /* Much lighter muted colors */
+    --muted: 215 50% 20%;
+    --muted-foreground: 210 40% 90%;
 
-    /* Keep gold accent but slightly muted */
-    --accent: 45 70% 45%;
-    --accent-foreground: 0 0% 100%;
+    /* Brighter accent */
+    --accent: 45 70% 65%;
+    --accent-foreground: 215 50% 8%;
 
-    /* Keep Thai red but slightly muted */
-    --destructive: 0 62% 45%;
-    --destructive-foreground: 0 0% 100%;
+    /* Brighter destructive */
+    --destructive: 0 62% 65%;
+    --destructive-foreground: 210 20% 98%;
 
-    --border: 215 50% 15%;
-    --input: 215 50% 15%;
-    --ring: 45 70% 45%;
+    /* More visible borders */
+    --border: 215 50% 25%;
+    --input: 215 50% 25%;
+    --ring: 45 70% 65%;
   }
 }
 

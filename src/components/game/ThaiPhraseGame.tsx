@@ -89,23 +89,23 @@ export const ThaiPhraseGame = () => {
         {gameState === "gameOver" && (
           <div className="space-y-6 pt-6">
             <div className="text-center space-y-4">
-              <Trophy className="w-16 h-16 mx-auto text-yellow-500" />
-              <p className="text-xl font-bold">Game Over!</p>
-              <p className="text-lg">
+              <Trophy className="w-16 h-16 mx-auto text-yellow-500 dark:text-yellow-400" />
+              <p className="text-xl font-bold text-foreground">Game Over!</p>
+              <p className="text-lg text-foreground">
                 Final Score: {finalScore}/{settings.questionsPerRound}
               </p>
             </div>
 
             {wrongAnswers.length > 0 && (
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-700">
+                <h3 className="text-lg font-semibold text-foreground">
                   Incorrect answers:
                 </h3>
                 <div className="space-y-4">
-                  {wrongAnswers.map((wrong) => (
+                  {wrongAnswers.map((wrong, index) => (
                     <div
                       key={wrong.question.id}
-                      className="bg-gray-50 rounded-lg p-4 space-y-2"
+                      className="bg-white dark:bg-card rounded-lg p-4 space-y-2 border-2 border-border"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -122,18 +122,16 @@ export const ThaiPhraseGame = () => {
                             <Volume2 className="w-4 h-4" />
                           </Button>
                         </div>
-                        {settings.showRomanized && (
-                          <span className="text-gray-500 text-sm">
-                            {wrong.question.romanized}
-                          </span>
-                        )}
+                        <span className="text-muted-foreground text-sm">
+                          {wrong.question.romanized}
+                        </span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
-                        <span className="text-green-600 font-medium">
+                        <span className="text-green-600 dark:text-green-400 font-medium">
                           Correct: {wrong.question.meaning}
                         </span>
-                        <X className="w-4 h-4 text-gray-300" />
-                        <span className="text-red-600 font-medium">
+                        <X className="w-4 h-4 text-muted-foreground/50" />
+                        <span className="text-red-600 dark:text-red-400 font-medium">
                           You chose: {wrong.playerAnswer.meaning}
                         </span>
                       </div>
@@ -146,7 +144,7 @@ export const ThaiPhraseGame = () => {
             <div className="space-y-2 pt-4">
               <Button
                 onClick={() => setGameState("playing")}
-                className="w-full flex items-center justify-center gap-2"
+                className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground"
               >
                 <RefreshCw className="w-4 h-4" />
                 Play Again
@@ -154,7 +152,7 @@ export const ThaiPhraseGame = () => {
               <Button
                 onClick={handleReturnToMenu}
                 variant="outline"
-                className="w-full"
+                className="w-full border-2 hover:bg-accent/10 dark:border-primary/30 dark:hover:border-primary dark:hover:bg-primary/10 dark:hover:text-white"
               >
                 Return to Menu
               </Button>

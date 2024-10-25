@@ -62,19 +62,6 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     }
   }, [currentItem, settings.autoSpeak, feedback]);
 
-  // Filter out any extra information that could give away answers
-  const getSafeExtras = () => {
-    if (!currentItem?.extra) return null;
-
-    const safeExtras = { ...currentItem.extra };
-    // Only show word examples and class before answer
-    // Remove sound hints and other potential spoilers
-    if (!feedback) {
-      delete safeExtras.sound;
-    }
-    return safeExtras;
-  };
-
   return (
     <div className="space-y-6">
       <GameHeader
@@ -91,51 +78,17 @@ export const GameScreen: React.FC<GameScreenProps> = ({
           <div className="text-center">
             <ThaiCharacterDisplay
               character={currentItem.thai}
-              size={`text-5xl ${feedback?.correct ? "text-green-600" : ""}`}
+              size="text-5xl"
               className={`transition-all duration-300 ${
-                feedback?.correct ? "scale-110" : ""
+                feedback?.correct ? "text-green-500 dark:text-green-400" : ""
               }`}
-              onSpeak={() => speak(currentItem.thai)}
+              onSpeak={speak}
               isPlaying={isPlaying}
             />
 
             {settings.showRomanized && (
-              <div className="text-lg text-gray-600 mt-2">
+              <div className="text-lg text-muted-foreground mt-2">
                 {currentItem.romanized}
-              </div>
-            )}
-
-            {getSafeExtras() && (
-              <div className="text-sm text-gray-500 mt-4 space-y-1">
-                {getSafeExtras()?.wordThai && (
-                  <div className="flex items-center justify-center gap-2">
-                    <ThaiCharacterDisplay
-                      character={getSafeExtras()?.wordThai || ""}
-                      size="text-lg"
-                      onSpeak={() => speak(getSafeExtras()?.wordThai || "")}
-                      isPlaying={isPlaying}
-                    />
-                    <span>•</span>
-                    <span>{getSafeExtras()?.wordMeaning}</span>
-                  </div>
-                )}
-                {getSafeExtras()?.class && !feedback && (
-                  <p>Consonant Class: {getSafeExtras()?.class}</p>
-                )}
-              </div>
-            )}
-
-            {/* Show additional information after answer */}
-            {feedback && currentItem.extra?.sound && (
-              <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-600">
-                  Sound: {currentItem.extra.sound}
-                </p>
-                {currentItem.extra.class && (
-                  <p className="text-sm text-gray-600">
-                    Class: {currentItem.extra.class}
-                  </p>
-                )}
               </div>
             )}
           </div>
@@ -145,11 +98,17 @@ export const GameScreen: React.FC<GameScreenProps> = ({
               <Button
                 key={index}
                 onClick={() => handleAnswer(option)}
-                className={`p-4 h-auto text-left transition-all duration-300 ${
-                  feedback?.correct && option.id === currentItem.id
-                    ? "bg-green-500 hover:bg-green-600 scale-105"
-                    : ""
-                }`}
+                className={`p-4 h-auto text-left transition-all duration-300
+    border-2 dark:border-primary/30
+    hover:border-primary dark:hover:border-primary
+    hover:bg-primary/10 dark:hover:bg-primary/20
+    hover:text-foreground dark:hover:text-foreground
+    disabled:opacity-100
+    ${
+      feedback?.correct && option.id === currentItem.id
+        ? "bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 text-white dark:text-white scale-105 border-green-400 dark:border-green-500 disabled:text-white dark:disabled:text-white"
+        : "bg-card dark:text-white disabled:opacity-50"
+    }`}
                 variant="outline"
                 disabled={!!feedback}
               >
@@ -160,10 +119,10 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 
           {feedback && !feedback.correct && (
             <div className="space-y-4">
-              <div className="p-4 rounded-lg text-center bg-red-100 text-red-800">
+              <div className="p-4 rounded-lg text-center bg-red-100/90 dark:bg-red-900/50 text-red-800 dark:text-red-200">
                 <div className="flex items-center justify-center gap-2">
                   <X className="w-5 h-5" />
-                  {feedback.message}{" "}
+                  <span>Incorrect. The answer was:</span>
                   {feedback.answer && (
                     <span className="font-bold">{feedback.answer}</span>
                   )}
@@ -171,7 +130,10 @@ export const GameScreen: React.FC<GameScreenProps> = ({
               </div>
 
               {canProceed && (
-                <Button onClick={handleNextQuestion} className="w-full">
+                <Button
+                  onClick={handleNextQuestion}
+                  className="w-full bg-primary hover:bg-primary/90"
+                >
                   Continue to Next Question
                 </Button>
               )}

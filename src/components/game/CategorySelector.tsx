@@ -35,9 +35,12 @@ interface CategorySelectorProps {
 }
 
 const difficultyColors = {
-  beginner: "bg-green-100 text-green-800 border-green-200",
-  intermediate: "bg-blue-100 text-blue-800 border-blue-200",
-  advanced: "bg-purple-100 text-purple-800 border-purple-200",
+  beginner:
+    "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100 border-green-200 dark:border-green-800",
+  intermediate:
+    "bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 border-blue-200 dark:border-blue-800",
+  advanced:
+    "bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-100 border-purple-200 dark:border-purple-800",
 };
 
 export const CategorySelector: React.FC<CategorySelectorProps> = ({
@@ -47,7 +50,7 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
     return (
       <div className="text-center p-8">
         <h2 className="text-2xl font-bold text-primary mb-4">Coming Soon!</h2>
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           We&apos;re working on adding learning content.
         </p>
       </div>
@@ -60,7 +63,7 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
         <h2 className="text-2xl font-bold text-primary mb-2">
           Choose a Category
         </h2>
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           Select what you&apos;d like to learn today
         </p>
       </div>
@@ -73,7 +76,7 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
           return (
             <Card
               key={category.id}
-              className="p-4 cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 hover:border-primary"
+              className="p-4 cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border hover:border-primary bg-card"
               onClick={() => onSelect(category)}
             >
               <div className="flex items-start gap-4">
@@ -82,7 +85,9 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-semibold text-lg">{category.title}</h3>
+                    <h3 className="font-semibold text-lg text-foreground">
+                      {category.title}
+                    </h3>
                     <Badge
                       variant="secondary"
                       className={difficultyColors[category.difficulty]}
@@ -90,10 +95,12 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
                       {category.difficulty}
                     </Badge>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">
+                  <p className="text-sm text-muted-foreground mb-2">
                     {category.description}
                   </p>
-                  <div className="text-xs text-gray-500">{itemCount} items</div>
+                  <div className="text-xs text-muted-foreground/80">
+                    {itemCount} items
+                  </div>
                 </div>
               </div>
             </Card>
