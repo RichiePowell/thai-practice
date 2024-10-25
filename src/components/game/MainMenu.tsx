@@ -43,7 +43,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({
           <CollapsibleTrigger asChild>
             <Button
               variant="ghost"
-              className="w-full flex items-center justify-between"
+              className="w-full flex items-center justify-between p-6"
             >
               <div className="flex items-center">
                 <Settings className="w-5 h-5 mr-2" />
