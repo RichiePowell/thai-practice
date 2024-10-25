@@ -25,17 +25,7 @@ const GameHeader: React.FC<GameHeaderProps> = ({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onReturnToMenu}
-          className="rounded-full h-8 w-8"
-          title="Return to Menu"
-        >
-          <Home className="w-4 h-4" />
-        </Button>
-
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 ml-auto">
           <div className="flex items-center gap-1.5">
             <Trophy className="w-4 h-4 text-yellow-500" />
             <span className="text-sm font-medium">

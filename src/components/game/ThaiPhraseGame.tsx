@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, Trophy, Volume2, X } from "lucide-react";
+import { RefreshCw, Trophy, Volume2, X, Home } from "lucide-react";
 import { MainMenu } from "./MainMenu";
 import { GameScreen } from "./GameScreen";
 import type { GameSettings } from "@/types/GameSettings";
@@ -30,7 +30,6 @@ export const ThaiPhraseGame = () => {
     useState<LearningCategory | null>(null);
 
   const handleGameOver = (score: number, wrongAnswers: WrongAnswer[]) => {
-    // Deduplicate wrong answers based on the question ID
     const uniqueWrongAnswers = wrongAnswers.filter(
       (answer, index, self) =>
         index === self.findIndex((a) => a.question.id === answer.question.id)
@@ -52,8 +51,21 @@ export const ThaiPhraseGame = () => {
     setWrongAnswers([]);
   };
 
+  const HomeButton = () => (
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={handleReturnToMenu}
+      className="absolute top-4 left-4 h-8 w-8 rounded-full"
+      title="Return to Menu"
+    >
+      <Home className="h-8 w-8" />
+    </Button>
+  );
+
   return (
-    <Card className="w-full max-w-2xl mx-auto shadow-lg">
+    <Card className="w-full max-w-2xl mx-auto shadow-lg relative">
+      {gameState !== "menu" && <HomeButton />}
       {gameState !== "playing" && gameState !== "gameOver" && (
         <CardHeader>
           <Logo />
