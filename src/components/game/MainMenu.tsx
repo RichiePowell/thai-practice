@@ -1,10 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
+import { Play, Settings } from "lucide-react";
 import { SettingsPanel } from "./SettingsPanel";
 import type { GameSettings } from "@/types/GameSettings";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 interface MainMenuProps {
   onStartGame: () => void;
@@ -17,6 +22,8 @@ export const MainMenu: React.FC<MainMenuProps> = ({
   settings,
   onSettingsChange,
 }) => {
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
   return (
     <div className="space-y-8">
       <div className="text-center">
@@ -31,13 +38,32 @@ export const MainMenu: React.FC<MainMenuProps> = ({
         Start Game
       </Button>
 
-      <div className="bg-gray-50 p-6 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4">Game Settings</h2>
-        <SettingsPanel
-          settings={settings}
-          onSettingsChange={onSettingsChange}
-        />
-      </div>
+      <Collapsible open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
+        <div className="bg-gray-50 rounded-lg">
+          <CollapsibleTrigger asChild>
+            <Button
+              variant="ghost"
+              className="w-full flex items-center justify-between"
+            >
+              <div className="flex items-center">
+                <Settings className="w-5 h-5 mr-2" />
+                <h2 className="text-lg">Game Settings</h2>
+              </div>
+              <span className="text-sm text-gray-500">
+                {isSettingsOpen ? "Hide Settings" : "Show Settings"}
+              </span>
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className="p-6">
+              <SettingsPanel
+                settings={settings}
+                onSettingsChange={onSettingsChange}
+              />
+            </div>
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
     </div>
   );
 };
