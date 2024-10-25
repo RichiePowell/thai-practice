@@ -1,6 +1,9 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { AudioProvider } from "@/context/AudioContext";
-import { AudioToggle } from "@/components/AudioToggle";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { AudioToggle } from "@/components/game/AudioToggle";
+import { ThemeScript } from "@/components/ThemeScript";
 import "./globals.css";
 import { ReactNode } from "react";
 
@@ -19,13 +22,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head />
-      <body>
-        <AudioProvider>
-          <AudioToggle />
-          {children}
-        </AudioProvider>
+      <body className="min-h-screen bg-background">
+        <ThemeScript />
+        <ThemeProvider>
+          <AudioProvider>
+            <div className="relative">
+              <AudioToggle />
+              {children}
+            </div>
+          </AudioProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
