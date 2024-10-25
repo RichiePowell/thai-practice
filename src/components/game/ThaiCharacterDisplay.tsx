@@ -51,7 +51,7 @@ const ThaiCharacterDisplay: React.FC<ThaiCharacterDisplayProps> = ({
         <AlertCircle className="h-4 w-4" />
         <AlertTitle>Display Error</AlertTitle>
         <AlertDescription className="text-sm">
-          The Thai character "{character}" (
+          The Thai character &ldquo;{character}&ldquo; (
           {character.codePointAt(0)?.toString(16)}) could not be rendered.
           Please ensure you have Thai fonts installed.
         </AlertDescription>

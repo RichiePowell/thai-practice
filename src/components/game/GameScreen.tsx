@@ -60,7 +60,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     if (settings.autoSpeak && currentItem && !feedback) {
       speak(currentItem.thai);
     }
-  }, [currentItem, settings.autoSpeak]);
+  }, [currentItem, settings.autoSpeak, feedback]);
 
   // Filter out any extra information that could give away answers
   const getSafeExtras = () => {
