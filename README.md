@@ -1,33 +1,36 @@
 # Thai Language Learning Game
 
-A React-based interactive game for learning Thai phrases. Built with Next.js, TypeScript, and Tailwind CSS using the shadcn/ui component library.
+A React-based interactive game for learning Thai phrases and script. Built with Next.js, TypeScript, and Tailwind CSS, utilizing the shadcn/ui component library.
 
 ## Features
 
-- Interactive quiz format for learning Thai phrases
+- Multiple learning categories covering Thai script, common phrases, numbers, and more
+- Three difficulty levels: beginner, intermediate, and advanced
+- Interactive quiz format with multiple-choice questions
 - Text-to-speech functionality for Thai pronunciation
 - Customizable game settings:
-  - Adjustable timer duration
+  - Adjustable timer duration (5-30 seconds)
   - Optional romanized text display
-  - Configurable number of questions per round
-- Progress tracking with scores
+  - Configurable number of questions per round (5-20)
+  - Auto-play pronunciation setting
+- Progress tracking with scores and review of incorrect answers
 - Anti-repetition system to prevent frequent phrase repetition
 - Clean, modern UI with animations and feedback
 - Mobile-responsive design
 
 ## Tech Stack
 
-- [Next.js 15](https://nextjs.org/)
+- [Next.js 13](https://nextjs.org/) with App Router
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
-- [shadcn/ui](https://ui.shadcn.com/)
+- [shadcn/ui](https://ui.shadcn.com/) component library
 - [Lucide Icons](https://lucide.dev/)
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18.18 or later
+- Node.js 18.x or later
 - npm or yarn
 
 ### Installation
@@ -44,7 +47,7 @@ cd thai-language-game
 ```bash
 npm install
 # or
-yarn
+yarn install
 ```
 
 3. Start the development server:
@@ -62,39 +65,67 @@ yarn dev
 ```
 src/
 ├── app/
-│   └── page.tsx           # Main app page
+│   ├── layout.tsx             # App layout component
+│   └── page.tsx               # Main app page
 ├── components/
-│   ├── game/
-│   │   ├── GameScreen.tsx     # Game interface
-│   │   ├── MainMenu.tsx       # Main menu
-│   │   ├── SettingsPanel.tsx  # Game settings
-│   │   └── ThaiPhraseGame.tsx # Main game component
-│   └── ui/                # shadcn/ui components
+│   ├── game/                  # Game-related components
+│   │   ├── CategorySelector.tsx
+│   │   ├── GameHeader.tsx
+│   │   ├── GameScreen.tsx
+│   │   ├── MainMenu.tsx
+│   │   ├── SettingsPanel.tsx
+│   │   ├── ThaiCharacterDisplay.tsx
+│   │   └── ThaiPhraseGame.tsx
+│   └── ui/                    # UI components
 ├── constants/
-│   ├── config.ts         # Game configuration
-│   ├── phrases.ts        # Thai phrases data
-│   └── settings.ts       # Default settings
+│   ├── categories.ts          # Learning category data
+│   ├── config.ts              # Game configuration
+│   ├── content/               # Content for each category
+│   │   ├── classifiers.ts
+│   │   ├── commonPhrases.ts
+│   │   ├── directions.ts
+│   │   ├── foodAndDrink.ts
+│   │   ├── index.ts
+│   │   ├── numbers.ts
+│   │   ├── pronouns.ts
+│   │   ├── thaiScript.ts
+│   │   ├── thaiScriptAdvanced.ts
+│   │   ├── thaiScriptIntermediate.ts
+│   │   └── travel.ts
+│   ├── phrases.ts             # Thai phrases data (legacy)
+│   └── settings.ts            # Default game settings
+├── context/
+│   └── AudioContext.tsx       # Audio context provider
 ├── hooks/
-│   └── useGameLogic.ts   # Game logic hook
-└── types/
-    ├── FeedbackType.ts   # Feedback type definitions
-    ├── GameSettings.ts   # Settings type definitions
-    └── ThaiPhrase.ts     # Phrase type definitions
+│   └── useGameLogic.ts        # Game logic hook
+└── types/                     # Type definitions
+    ├── ContentTypes.ts
+    ├── FeedbackType.ts
+    ├── GameSettings.ts
+    ├── LearningCategory.ts
+    ├── ThaiPhrase.ts
+    └── WrongAnswerType.ts
 ```
 
 ## Game Features
 
-### Learning Modes
+### Learning Categories
 
-- Multiple choice quiz format
-- Thai script with optional romanization
-- Audio pronunciation
+- Thai Script (Beginner, Intermediate, Advanced)
+- Common Phrases
+- Numbers & Counting
+- Food & Drink
+- Travel & Transport
+- Directions
+- Pronouns & Polite Particles
+- Classifiers
 
 ### Customization
 
 - Timer settings (5-30 seconds)
 - Number of questions per round (5-20)
 - Romanized text toggle
+- Auto-play pronunciation
 
 ### Anti-Repetition System
 
@@ -122,10 +153,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Future Enhancements
 
-- [ ] Additional Thai phrases and categories
+- [ ] Expanded content library with more phrases and categories
 - [ ] Different game modes (writing practice, listening comprehension)
 - [ ] Progress tracking across sessions
-- [ ] Difficulty levels
-- [ ] Spaced repetition system
+- [ ] Spaced repetition system for optimized learning
 - [ ] User accounts and progress saving
 - [ ] Leaderboards and achievements
+- [ ] Mobile app version
