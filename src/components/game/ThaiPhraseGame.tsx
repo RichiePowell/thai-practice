@@ -30,8 +30,14 @@ export const ThaiPhraseGame = () => {
     useState<LearningCategory | null>(null);
 
   const handleGameOver = (score: number, wrongAnswers: WrongAnswer[]) => {
+    // Deduplicate wrong answers based on the question ID
+    const uniqueWrongAnswers = wrongAnswers.filter(
+      (answer, index, self) =>
+        index === self.findIndex((a) => a.question.id === answer.question.id)
+    );
+
     setFinalScore(score);
-    setWrongAnswers(wrongAnswers);
+    setWrongAnswers(uniqueWrongAnswers);
     setGameState("gameOver");
   };
 
@@ -93,12 +99,12 @@ export const ThaiPhraseGame = () => {
             {wrongAnswers.length > 0 && (
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-gray-700">
-                  Wrong answers:
+                  Incorrect answers:
                 </h3>
                 <div className="space-y-4">
-                  {wrongAnswers.map((wrong, index) => (
+                  {wrongAnswers.map((wrong) => (
                     <div
-                      key={index}
+                      key={wrong.question.id}
                       className="bg-gray-50 rounded-lg p-4 space-y-2"
                     >
                       <div className="flex items-center justify-between">
