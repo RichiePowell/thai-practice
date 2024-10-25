@@ -102,7 +102,7 @@ export const ThaiPhraseGame = () => {
                   Incorrect answers:
                 </h3>
                 <div className="space-y-4">
-                  {wrongAnswers.map((wrong, index) => (
+                  {wrongAnswers.map((wrong) => (
                     <div
                       key={wrong.question.id}
                       className="bg-white dark:bg-card rounded-lg p-4 space-y-2 border-2 border-border"
