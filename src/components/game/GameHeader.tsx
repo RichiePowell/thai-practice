@@ -1,6 +1,5 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Home, Timer, Trophy } from "lucide-react";
+import { Timer, Trophy } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 interface GameHeaderProps {
@@ -18,7 +17,6 @@ const GameHeader: React.FC<GameHeaderProps> = ({
   questionsPerRound,
   timeLeft,
   timerEnabled,
-  onReturnToMenu,
 }) => {
   const progressPercentage = (totalQuestions / questionsPerRound) * 100;
 

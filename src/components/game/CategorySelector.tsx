@@ -23,12 +23,7 @@ import {
   Filter,
 } from "lucide-react";
 import type { LearningCategory } from "@/types/LearningCategory";
-import {
-  LEARNING_CATEGORIES,
-  BEGINNER_CATEGORIES,
-  INTERMEDIATE_CATEGORIES,
-  ADVANCED_CATEGORIES,
-} from "@/constants/categories";
+import { LEARNING_CATEGORIES } from "@/constants/categories";
 import { getCategoryItemCount } from "@/constants/content";
 
 const iconMap = {
