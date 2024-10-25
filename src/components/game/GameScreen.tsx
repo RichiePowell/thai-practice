@@ -93,7 +93,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
             )}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {options.map((option, index) => (
               <Button
                 key={index}
