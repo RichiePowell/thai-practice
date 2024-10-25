@@ -135,12 +135,8 @@ const useGameLogic = ({
         if (currentItem.type === "phrase") {
           setFeedback({
             correct: false,
-            message: `Incorrect. The answer was "${currentItem.thai}" (${currentItem.romanized})`,
-          });
-        } else {
-          setFeedback({
-            correct: false,
-            message: "Incorrect!",
+          message: `Incorrect. The answer was:`,
+          answer: currentItem.meaning,
           });
         }
         setCanProceed(true);
