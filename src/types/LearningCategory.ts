@@ -9,7 +9,11 @@ export type LearningCategoryId =
   | "travel"
   | "directions"
   | "pronouns"
-  | "classifiers";
+  | "classifiers"
+  | "time-calendar"
+  | "family-relationships"
+  | "colors"
+  | "question-words";
 
 export interface LearningCategory {
   id: LearningCategoryId;

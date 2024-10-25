@@ -11,6 +11,10 @@ import { directionContent } from "./directions";
 import { classifiersContent } from "./classifiers";
 import { thaiScriptAdvancedContent } from "./thaiScriptAdvanced";
 import { thaiScriptIntermediateContent } from "./thaiScriptIntermediate";
+import { timeAndCalendarContent } from "./timeAndCalendar";
+import { familyAndRelationshipsContent } from "./familyAndRelationships";
+import { colorsContent } from "./colors";
+import { questionWordsContent } from "./questionWords";
 
 export const CATEGORY_CONTENT: Partial<
   Record<LearningCategoryId, CategoryContent>
@@ -25,6 +29,10 @@ export const CATEGORY_CONTENT: Partial<
   pronouns: pronounsContent,
   directions: directionContent,
   classifiers: classifiersContent,
+  "time-calendar": timeAndCalendarContent,
+  "family-relationships": familyAndRelationshipsContent,
+  colors: colorsContent,
+  "question-words": questionWordsContent,
 };
 
 // Helper functions
