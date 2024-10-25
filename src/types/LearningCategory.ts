@@ -1,5 +1,7 @@
 export type LearningCategoryId =
   | "thai-script"
+  | "thai-script-intermediate"
+  | "thai-script-advanced"
   | "common-phrases"
   | "numbers"
   | "tones"

@@ -84,3 +84,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&display=swap");
+
+.font-thai {
+  font-family: "Noto Sans Thai", system-ui, sans-serif;
+}

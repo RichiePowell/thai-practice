@@ -9,19 +9,22 @@ import { pronounsContent } from "./pronouns";
 import { travelContent } from "./travel";
 import { directionContent } from "./directions";
 import { classifiersContent } from "./classifiers";
+import { thaiScriptAdvancedContent } from "./thaiScriptAdvanced";
+import { thaiScriptIntermediateContent } from "./thaiScriptIntermediate";
 
 export const CATEGORY_CONTENT: Partial<
   Record<LearningCategoryId, CategoryContent>
 > = {
   "common-phrases": commonPhrasesContent,
   "thai-script": thaiScriptContent,
+  "thai-script-intermediate": thaiScriptIntermediateContent,
+  "thai-script-advanced": thaiScriptAdvancedContent,
   numbers: numbersContent,
   "food-drink": foodAndDrinkContent,
   travel: travelContent,
   pronouns: pronounsContent,
   directions: directionContent,
   classifiers: classifiersContent,
-  // tones: tonesContent,
 };
 
 // Helper functions

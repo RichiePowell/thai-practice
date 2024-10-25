@@ -26,18 +26,18 @@ const ALL_CATEGORIES: LearningCategory[] = [
     difficulty: "beginner",
   },
   {
-    id: "tones",
-    title: "Tones Practice",
-    description: "Master the five Thai tones with audio examples",
-    icon: "Music",
-    difficulty: "intermediate",
-  },
-  {
     id: "food-drink",
     title: "Food & Drink",
     description: "Common dishes, ingredients, and ordering phrases",
     icon: "UtensilsCrossed",
     difficulty: "beginner",
+  },
+  {
+    id: "thai-script-intermediate",
+    title: "Intermediate Thai Script",
+    description: "Learn complex consonants, vowel combinations, and tone rules",
+    icon: "Book",
+    difficulty: "intermediate",
   },
   {
     id: "travel",
@@ -65,6 +65,14 @@ const ALL_CATEGORIES: LearningCategory[] = [
     title: "Classifiers",
     description: "Learn Thai noun classifiers and their usage",
     icon: "LayoutGrid",
+    difficulty: "advanced",
+  },
+  {
+    id: "thai-script-advanced",
+    title: "Advanced Thai Script",
+    description:
+      "Master rare characters, Sanskrit influences, and special symbols",
+    icon: "Book",
     difficulty: "advanced",
   },
 ];
