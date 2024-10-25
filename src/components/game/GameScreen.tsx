@@ -79,7 +79,13 @@ export const GameScreen: React.FC<GameScreenProps> = ({
         <>
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-2">
-              <div className="text-4xl mb-2">{currentItem.thai}</div>
+              <div
+                className={`text-4xl mb-2 transition-all duration-500 ${
+                  feedback?.correct ? "scale-110 text-green-600" : ""
+                }`}
+              >
+                {currentItem.thai}
+              </div>
               <Button
                 variant="ghost"
                 size="icon"
@@ -94,21 +100,6 @@ export const GameScreen: React.FC<GameScreenProps> = ({
                 {currentItem.romanized}
               </div>
             )}
-            {/* {currentItem.extra && (
-              <div className="text-sm text-gray-500 mt-2">
-                <p>
-                  {currentItem.extra.wordThai} • {currentItem.extra.wordMeaning}
-                </p>
-                {currentItem.extra.class && (
-                  <p className="mt-1">
-                    Consonant Class: {currentItem.extra.class}
-                  </p>
-                )}
-                {currentItem.extra.sound && (
-                  <p className="mt-1">Sound: {currentItem.extra.sound}</p>
-                )}
-              </div>
-            )} */}
             <p className="text-gray-600 mt-4">
               {category.id === "thai-script"
                 ? "Match the consonant to its correct sound"
@@ -121,10 +112,10 @@ export const GameScreen: React.FC<GameScreenProps> = ({
               <Button
                 key={index}
                 onClick={() => handleAnswer(option)}
-                className={`p-4 h-auto text-left ${
-                  feedback &&
-                  option.id === currentItem.id &&
-                  "bg-green-500 hover:bg-green-600"
+                className={`p-4 h-auto text-left transition-all duration-300 ${
+                  feedback?.correct && option.id === currentItem.id
+                    ? "bg-green-500 hover:bg-green-600 scale-105"
+                    : ""
                 }`}
                 variant="outline"
                 disabled={!!feedback}
@@ -134,21 +125,11 @@ export const GameScreen: React.FC<GameScreenProps> = ({
             ))}
           </div>
 
-          {feedback && (
-            <div className="space-y-4">
-              <div
-                className={`mt-4 p-4 rounded-lg text-center ${
-                  feedback.correct
-                    ? "bg-green-100 text-green-800"
-                    : "bg-red-100 text-red-800"
-                }`}
-              >
+          {feedback && !feedback.correct && (
+            <div className="space-y-4 mt-4">
+              <div className="p-4 rounded-lg text-center bg-red-100 text-red-800">
                 <div className="flex items-center justify-center gap-2">
-                  {feedback.correct ? (
-                    <Check className="w-5 h-5" />
-                  ) : (
-                    <X className="w-5 h-5" />
-                  )}
+                  <X className="w-5 h-5" />
                   {feedback.message}
                 </div>
               </div>

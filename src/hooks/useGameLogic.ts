@@ -8,6 +8,9 @@ import type { ContentItem } from "@/types/ContentTypes";
 import { CATEGORY_CONTENT } from "@/constants/content";
 import { HISTORY_LENGTH } from "@/constants/config";
 import { DEFAULT_SETTINGS } from "@/constants/settings";
+import { useAudio } from "@/context/AudioContext";
+
+const CORRECT_ANSWER_DELAY = 1500; // Time in ms before advancing to next question
 
 interface UseGameLogicParams {
   settings: GameSettings;
@@ -20,6 +23,7 @@ const useGameLogic = ({
   onGameOver,
   category,
 }: UseGameLogicParams) => {
+  const { playSound } = useAudio(); // Add this line
   const [currentItem, setCurrentItem] = useState<ContentItem | null>(null);
   const [options, setOptions] = useState<ContentItem[]>([]);
   const [score, setScore] = useState(0);
@@ -29,14 +33,14 @@ const useGameLogic = ({
     settings?.timerDuration ?? DEFAULT_SETTINGS.timerDuration
   );
   const [canProceed, setCanProceed] = useState(false);
-  const [questionHistory, setQuestionHistory] = useState<string[]>([]); // Store IDs instead of objects
+  const [questionHistory, setQuestionHistory] = useState<string[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const correctAnswerTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const generateQuestion = useCallback(() => {
     const categoryContent = CATEGORY_CONTENT[category.id];
     if (!categoryContent) return;
 
-    // Filter using IDs instead of objects
     const availableItems = categoryContent.items.filter(
       (item) => !questionHistory.includes(item.id)
     );
@@ -49,7 +53,6 @@ const useGameLogic = ({
     const randomIndex = Math.floor(Math.random() * itemsToUse.length);
     const correct = itemsToUse[randomIndex];
 
-    // Update history with IDs
     setQuestionHistory((prev) => {
       const newHistory = [...prev, correct.id];
       return newHistory.slice(-HISTORY_LENGTH);
@@ -83,49 +86,11 @@ const useGameLogic = ({
   const handleTimeUp = () => {
     if (!currentItem) return;
 
+    playSound("/sounds/error.mp3"); // Also play error sound on time up
     setFeedback({
       correct: false,
-      message:
-        currentItem.type === "phrase"
-          ? `Time's up! The answer was "${currentItem.thai}" (${currentItem.romanized})`
-          : "Time's up!",
+      message: `Time's up! The answer was "${currentItem.meaning}"`,
     });
-    setCanProceed(true);
-  };
-
-  const handleAnswer = (selected: ContentItem) => {
-    if (feedback || !currentItem) return;
-
-    if (timerRef.current) clearTimeout(timerRef.current);
-
-    const isCorrect = selected.id === currentItem.id;
-
-    if (isCorrect) {
-      setScore((prev) => prev + 1);
-      if (currentItem.type === "phrase") {
-        setFeedback({
-          correct: true,
-          message: `Correct! "${currentItem.thai}" (${currentItem.romanized})`,
-        });
-      } else {
-        setFeedback({
-          correct: true,
-          message: "Correct!",
-        });
-      }
-    } else {
-      if (currentItem.type === "phrase") {
-        setFeedback({
-          correct: false,
-          message: `Incorrect. The answer was "${currentItem.thai}" (${currentItem.romanized})`,
-        });
-      } else {
-        setFeedback({
-          correct: false,
-          message: "Incorrect!",
-        });
-      }
-    }
     setCanProceed(true);
   };
 
@@ -138,15 +103,45 @@ const useGameLogic = ({
     }
   };
 
-  // Initialize game
+  const handleAnswer = (selected: ContentItem) => {
+    if (feedback || !currentItem) return;
+
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (correctAnswerTimerRef.current)
+      clearTimeout(correctAnswerTimerRef.current);
+
+    const isCorrect = selected.id === currentItem.id;
+
+    if (isCorrect) {
+      playSound("/sounds/success.mp3");
+      setScore((prev) => prev + 1);
+      setFeedback({
+        correct: true,
+        message: `Correct! "${currentItem.thai}" (${currentItem.romanized})`,
+      });
+
+      correctAnswerTimerRef.current = setTimeout(() => {
+        handleNextQuestion();
+      }, CORRECT_ANSWER_DELAY);
+    } else {
+      playSound("/sounds/error.mp3"); // Add error sound
+      setFeedback({
+        correct: false,
+        message: `Incorrect. The answer was "${currentItem.meaning}"`,
+      });
+    }
+    setCanProceed(true);
+  };
+
   useEffect(() => {
     generateQuestion();
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
+      if (correctAnswerTimerRef.current)
+        clearTimeout(correctAnswerTimerRef.current);
     };
-  }, []); // Empty dependency array for initialization only
+  }, []);
 
-  // Handle timer
   useEffect(() => {
     if (settings.timerEnabled && timeLeft > 0 && !feedback) {
       timerRef.current = setTimeout(() => {
@@ -164,14 +159,7 @@ const useGameLogic = ({
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [
-    timeLeft,
-    settings.timerEnabled,
-    feedback,
-    currentItem,
-    generateQuestion,
-    handleTimeUp,
-  ]);
+  }, [timeLeft, settings.timerEnabled, feedback, currentItem]);
 
   return {
     currentItem,

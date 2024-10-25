@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import { AudioProvider } from "@/context/AudioContext";
+import { AudioToggle } from "@/components/AudioToggle";
 import "./globals.css";
+import { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: "Thai Language Game",
@@ -14,15 +17,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head />
-      <body>{children}</body>
+      <body>
+        <AudioProvider>
+          <AudioToggle />
+          {children}
+        </AudioProvider>
+      </body>
     </html>
   );
 }
