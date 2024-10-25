@@ -122,10 +122,12 @@ export const GameScreen: React.FC<GameScreenProps> = ({
               <div className="p-4 rounded-lg text-center bg-red-100/90 dark:bg-red-900/50 text-red-800 dark:text-red-200">
                 <div className="flex items-center justify-center gap-2">
                   <X className="w-5 h-5" />
-                  <span>Incorrect. The answer was:</span>
-                  {feedback.answer && (
-                    <span className="font-bold">{feedback.answer}</span>
-                  )}
+                  <span>
+                    <span>{feedback.message}</span>
+                    {feedback.answer && (
+                      <span className="font-bold">{feedback.answer}</span>
+                    )}
+                  </span>
                 </div>
               </div>
 

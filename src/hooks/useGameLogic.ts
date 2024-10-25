@@ -125,10 +125,8 @@ const useGameLogic = ({
 
     setFeedback({
       correct: false,
-      message:
-        currentItem.type === "phrase"
-          ? `Time's up! The answer was "${currentItem.thai}" (${currentItem.romanized})`
-          : "Time's up!",
+      message: `Time's up! The answer was:`,
+      answer: currentItem.meaning,
     });
     setCanProceed(true);
   }, [currentItem, feedback, settings.timerEnabled, playSound]);
