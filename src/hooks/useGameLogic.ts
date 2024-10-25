@@ -6,7 +6,6 @@ import type { FeedbackType } from "@/types/FeedbackType";
 import type { GameSettings } from "@/types/GameSettings";
 import type { ContentItem } from "@/types/ContentTypes";
 import { CATEGORY_CONTENT } from "@/constants/content";
-import { HISTORY_LENGTH } from "@/constants/config";
 import { DEFAULT_SETTINGS } from "@/constants/settings";
 import { useAudio } from "@/context/AudioContext";
 import { WrongAnswer } from "@/types/WrongAnswerType";
@@ -31,53 +30,94 @@ const useGameLogic = ({
     settings?.timerDuration ?? DEFAULT_SETTINGS.timerDuration
   );
   const [canProceed, setCanProceed] = useState(false);
-  const [questionHistory, setQuestionHistory] = useState<string[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const categoryContentRef = useRef(CATEGORY_CONTENT[category.id]);
   const { playSound } = useAudio();
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
 
-  const generateQuestion = useCallback(() => {
+  const [questionSet, setQuestionSet] = useState<ContentItem[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const lastQuestionRef = useRef<string | null>(null);
+  const isFirstQuestionRef = useRef(true);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  const generateNewSet = useCallback(() => {
     const categoryContent = categoryContentRef.current;
-    if (!categoryContent) return;
+    if (!categoryContent) return [];
 
-    // Filter using IDs instead of objects
-    const availableItems = categoryContent.items.filter(
-      (item) => !questionHistory.includes(item.id)
-    );
+    const allItems = [...categoryContent.items];
 
-    const itemsToUse =
-      availableItems.length > 0
-        ? availableItems
-        : categoryContent.items.filter((item) => item.id !== currentItem?.id);
+    // Shuffle all items to randomize order
+    let shuffledItems = allItems.sort(() => Math.random() - 0.5);
 
-    const randomIndex = Math.floor(Math.random() * itemsToUse.length);
-    const correct = itemsToUse[randomIndex];
-
-    // Update history with IDs
-    setQuestionHistory((prev) => {
-      const newHistory = [...prev, correct.id];
-      return newHistory.slice(-HISTORY_LENGTH);
-    });
-
-    const wrongOptions = categoryContent.items
-      .filter((item) => item.id !== correct.id)
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 3);
-
-    const allOptions = [...wrongOptions, correct].sort(
-      () => 0.5 - Math.random()
-    );
-
-    setCurrentItem(correct);
-    setOptions(allOptions);
-    setFeedback(null);
-    setCanProceed(false);
-
-    if (settings.timerEnabled) {
-      setTimeLeft(settings.timerDuration);
+    // Ensure no consecutive duplicates in the initial set
+    for (let i = 1; i < shuffledItems.length; i++) {
+      if (shuffledItems[i].id === shuffledItems[i - 1].id) {
+        // Swap with a non-duplicate item
+        const swapIndex = (i + 1) % shuffledItems.length;
+        [shuffledItems[i], shuffledItems[swapIndex]] = [
+          shuffledItems[swapIndex],
+          shuffledItems[i],
+        ];
+      }
     }
-  }, [settings.timerDuration, settings.timerEnabled]); // Removed dependencies that were causing the loop
+
+    return shuffledItems;
+  }, []);
+
+  const setupQuestion = useCallback(
+    (correct: ContentItem) => {
+      const categoryContent = categoryContentRef.current;
+      if (!categoryContent || !isInitialized) return; // Add initialization check
+
+      const wrongOptions = categoryContent.items
+        .filter((item) => item.id !== correct.id)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3);
+
+      const allOptions = [...wrongOptions, correct].sort(
+        () => Math.random() - 0.5
+      );
+
+      setCurrentItem(correct);
+      setOptions(allOptions);
+      setFeedback(null);
+      setCanProceed(false);
+
+      if (settings.timerEnabled) {
+        setTimeLeft(settings.timerDuration);
+      }
+    },
+    [settings.timerDuration, settings.timerEnabled, isInitialized]
+  );
+
+  const generateQuestion = useCallback(() => {
+    if (!isInitialized) return; // Add initialization check
+
+    if (currentIndex >= questionSet.length || questionSet.length === 0) {
+      const newSet = generateNewSet();
+      setQuestionSet(newSet);
+      setCurrentIndex(0);
+
+      if (newSet.length > 0) {
+        setupQuestion(newSet[0]);
+        lastQuestionRef.current = newSet[0].id;
+      }
+    } else {
+      const nextQuestion = questionSet[currentIndex];
+
+      if (nextQuestion.id === lastQuestionRef.current) {
+        const alternateIndex = (currentIndex + 1) % questionSet.length;
+        setCurrentIndex(alternateIndex);
+        setupQuestion(questionSet[alternateIndex]);
+        lastQuestionRef.current = questionSet[alternateIndex].id;
+      } else {
+        setupQuestion(nextQuestion);
+        lastQuestionRef.current = nextQuestion.id;
+        setCurrentIndex((prev) => prev + 1);
+      }
+    }
+  }, [currentIndex, questionSet, generateNewSet, setupQuestion, isInitialized]);
 
   const handleTimeUp = useCallback(() => {
     if (!currentItem || feedback || !settings.timerEnabled) return;
@@ -92,7 +132,7 @@ const useGameLogic = ({
           : "Time's up!",
     });
     setCanProceed(true);
-  }, [currentItem, feedback, settings.timerEnabled]);
+  }, [currentItem, feedback, settings.timerEnabled, playSound]);
 
   const handleAnswer = useCallback(
     (selected: ContentItem) => {
@@ -118,12 +158,12 @@ const useGameLogic = ({
             onGameOver(score + 1, wrongAnswers);
           } else {
             setTotalQuestions(newTotal);
+            setCurrentIndex((prev) => prev + 1);
             generateQuestion();
           }
         }, 500);
       } else {
         playSound("/sounds/error.mp3");
-        // Track wrong answer
         setWrongAnswers((prev) => [
           ...prev,
           {
@@ -132,13 +172,11 @@ const useGameLogic = ({
           },
         ]);
 
-        if (currentItem.type === "phrase") {
-          setFeedback({
-            correct: false,
+        setFeedback({
+          correct: false,
           message: `Incorrect. The answer was:`,
           answer: currentItem.meaning,
-          });
-        }
+        });
         setCanProceed(true);
       }
     },
@@ -150,15 +188,18 @@ const useGameLogic = ({
       onGameOver,
       score,
       generateQuestion,
+      wrongAnswers,
+      playSound,
     ]
   );
 
   const handleNextQuestion = useCallback(() => {
     const newTotal = totalQuestions + 1;
     if (newTotal >= settings.questionsPerRound) {
-      onGameOver(score, wrongAnswers); // Pass wrongAnswers here
+      onGameOver(score, wrongAnswers);
     } else {
       setTotalQuestions(newTotal);
+      setCurrentIndex((prev) => prev + 1);
       generateQuestion();
     }
   }, [
@@ -170,17 +211,47 @@ const useGameLogic = ({
     wrongAnswers,
   ]);
 
-  // Initialize game
   useEffect(() => {
-    generateQuestion();
+    const initialSet = generateNewSet();
+
+    // Set up initial question directly without using setupQuestion
+    if (initialSet.length > 0) {
+      const firstQuestion = initialSet[0];
+      const categoryContent = categoryContentRef.current;
+
+      if (categoryContent) {
+        const wrongOptions = categoryContent.items
+          .filter((item) => item.id !== firstQuestion.id)
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3);
+
+        const allOptions = [...wrongOptions, firstQuestion].sort(
+          () => Math.random() - 0.5
+        );
+
+        // Set all initial state synchronously
+        setQuestionSet(initialSet);
+        setCurrentIndex(0);
+        setCurrentItem(firstQuestion);
+        setOptions(allOptions);
+        lastQuestionRef.current = firstQuestion.id;
+
+        if (settings.timerEnabled) {
+          setTimeLeft(settings.timerDuration);
+        }
+      }
+    }
+
+    // Mark as initialized only after everything is set up
+    setIsInitialized(true);
+
     return () => {
       if (timerRef.current) {
         clearTimeout(timerRef.current);
       }
     };
-  }, []); // Removed generateQuestion from deps array
+  }, []);
 
-  // Handle timer
   useEffect(() => {
     if (settings.timerEnabled && timeLeft > 0 && !feedback) {
       timerRef.current = setTimeout(() => {
