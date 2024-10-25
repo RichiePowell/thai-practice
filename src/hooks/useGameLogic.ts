@@ -38,7 +38,6 @@ const useGameLogic = ({
   const [questionSet, setQuestionSet] = useState<ContentItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const lastQuestionRef = useRef<string | null>(null);
-  const isFirstQuestionRef = useRef(true);
   const [isInitialized, setIsInitialized] = useState(false);
 
   const generateNewSet = useCallback(() => {
@@ -48,7 +47,7 @@ const useGameLogic = ({
     const allItems = [...categoryContent.items];
 
     // Shuffle all items to randomize order
-    let shuffledItems = allItems.sort(() => Math.random() - 0.5);
+    const shuffledItems = allItems.sort(() => Math.random() - 0.5);
 
     // Ensure no consecutive duplicates in the initial set
     for (let i = 1; i < shuffledItems.length; i++) {
