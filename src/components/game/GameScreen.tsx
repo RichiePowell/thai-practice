@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
@@ -7,6 +9,7 @@ import useGameLogic from "@/hooks/useGameLogic";
 import ThaiCharacterDisplay from "./ThaiCharacterDisplay";
 import GameHeader from "./GameHeader";
 import { WrongAnswer } from "@/types/WrongAnswerType";
+import { useAudio } from "@/context/AudioContext";
 
 interface GameScreenProps {
   settings: GameSettings;
@@ -22,6 +25,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   onReturnToMenu,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const { isSoundEnabled } = useAudio();
 
   const {
     currentItem,
@@ -40,6 +44,8 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   });
 
   const speak = (text: string) => {
+    if (!isSoundEnabled) return;
+
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "th-TH";
     setIsPlaying(true);
@@ -57,9 +63,10 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 
   // Auto speak when question changes
   useEffect(() => {
-    if (settings.autoSpeak && currentItem && !feedback) {
+    if (settings.autoSpeak && currentItem && !feedback && isSoundEnabled) {
       speak(currentItem.thai);
     }
+    // Remove isSoundEnabled from dependency array
   }, [currentItem, settings.autoSpeak, feedback]);
 
   return (
@@ -82,7 +89,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
               className={`transition-all duration-300 ${
                 feedback?.correct ? "text-green-500 dark:text-green-400" : ""
               }`}
-              onSpeak={speak}
+              onSpeak={isSoundEnabled ? speak : undefined}
               isPlaying={isPlaying}
             />
 
@@ -99,16 +106,16 @@ export const GameScreen: React.FC<GameScreenProps> = ({
                 key={index}
                 onClick={() => handleAnswer(option)}
                 className={`p-4 h-auto text-left transition-all duration-300
-    border-2 dark:border-primary/30
-    hover:border-primary dark:hover:border-primary
-    hover:bg-primary/10 dark:hover:bg-primary/20
-    hover:text-foreground dark:hover:text-foreground
-    disabled:opacity-100
-    ${
-      feedback?.correct && option.id === currentItem.id
-        ? "bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 text-white dark:text-white scale-105 border-green-400 dark:border-green-500 disabled:text-white dark:disabled:text-white"
-        : "bg-card dark:text-white disabled:opacity-50"
-    }`}
+                  border-2 dark:border-primary/30
+                  hover:border-primary dark:hover:border-primary
+                  hover:bg-primary/10 dark:hover:bg-primary/20
+                  hover:text-foreground dark:hover:text-foreground
+                  disabled:opacity-100
+                  ${
+                    feedback?.correct && option.id === currentItem.id
+                      ? "bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 text-white dark:text-white scale-105 border-green-400 dark:border-green-500 disabled:text-white dark:disabled:text-white"
+                      : "bg-card dark:text-white disabled:opacity-50"
+                  }`}
                 variant="outline"
                 disabled={!!feedback}
               >
