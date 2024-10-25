@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Check, X, Timer, Volume2, Home } from "lucide-react";
+import { X } from "lucide-react";
 import type { GameSettings } from "@/types/GameSettings";
 import type { LearningCategory } from "@/types/LearningCategory";
 import useGameLogic from "@/hooks/useGameLogic";
 import ThaiCharacterDisplay from "./ThaiCharacterDisplay";
+import GameHeader from "./GameHeader";
+import { WrongAnswer } from "@/types/WrongAnswerType";
 
 interface GameScreenProps {
   settings: GameSettings;
   category: LearningCategory;
-  onGameOver: (score: number) => void;
+  onGameOver: (score: number, wrongAnswers: WrongAnswer[]) => void;
   onReturnToMenu: () => void;
 }
 
@@ -19,6 +21,8 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   onGameOver,
   onReturnToMenu,
 }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const {
     currentItem,
     options,
@@ -38,8 +42,25 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "th-TH";
+    setIsPlaying(true);
+
+    utterance.onend = () => {
+      setIsPlaying(false);
+    };
+
+    utterance.onerror = () => {
+      setIsPlaying(false);
+    };
+
     speechSynthesis.speak(utterance);
   };
+
+  // Auto speak when question changes
+  useEffect(() => {
+    if (settings.autoSpeak && currentItem && !feedback) {
+      speak(currentItem.thai);
+    }
+  }, [currentItem, settings.autoSpeak]);
 
   // Filter out any extra information that could give away answers
   const getSafeExtras = () => {
@@ -55,58 +76,28 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onReturnToMenu}
-            className="rounded-full"
-            title="Return to Menu"
-          >
-            <Home className="w-5 h-5" />
-          </Button>
-          <div className="text-sm text-gray-600">
-            Score: {score}/{totalQuestions} (
-            {totalQuestions < settings.questionsPerRound
-              ? `Question ${totalQuestions + 1}/${settings.questionsPerRound}`
-              : "Complete!"}
-            )
-          </div>
-        </div>
-        {settings.timerEnabled && !feedback && (
-          <div className="flex items-center gap-2">
-            <Timer className="w-4 h-4" />
-            <span
-              className={`font-mono ${timeLeft <= 3 ? "text-red-500" : ""}`}
-            >
-              {timeLeft}s
-            </span>
-          </div>
-        )}
-      </div>
+    <div className="space-y-6">
+      <GameHeader
+        score={score}
+        totalQuestions={totalQuestions}
+        questionsPerRound={settings.questionsPerRound}
+        timeLeft={timeLeft}
+        timerEnabled={settings.timerEnabled}
+        onReturnToMenu={onReturnToMenu}
+      />
 
       {currentItem && (
         <div className="space-y-6">
           <div className="text-center">
-            <div className="flex items-center justify-center gap-4">
-              <ThaiCharacterDisplay
-                character={currentItem.thai}
-                size={`text-5xl ${feedback?.correct ? "text-green-600" : ""}`}
-                className={`transition-all duration-300 ${
-                  feedback?.correct ? "scale-110" : ""
-                }`}
-              />
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => speak(currentItem.thai)}
-                className="rounded-full"
-              >
-                <Volume2 className="w-5 h-5" />
-              </Button>
-            </div>
+            <ThaiCharacterDisplay
+              character={currentItem.thai}
+              size={`text-5xl ${feedback?.correct ? "text-green-600" : ""}`}
+              className={`transition-all duration-300 ${
+                feedback?.correct ? "scale-110" : ""
+              }`}
+              onSpeak={() => speak(currentItem.thai)}
+              isPlaying={isPlaying}
+            />
 
             {settings.showRomanized && (
               <div className="text-lg text-gray-600 mt-2">
@@ -121,6 +112,8 @@ export const GameScreen: React.FC<GameScreenProps> = ({
                     <ThaiCharacterDisplay
                       character={getSafeExtras()?.wordThai || ""}
                       size="text-lg"
+                      onSpeak={() => speak(getSafeExtras()?.wordThai || "")}
+                      isPlaying={isPlaying}
                     />
                     <span>•</span>
                     <span>{getSafeExtras()?.wordMeaning}</span>
@@ -165,21 +158,11 @@ export const GameScreen: React.FC<GameScreenProps> = ({
             ))}
           </div>
 
-          {feedback && (
+          {feedback && !feedback.correct && (
             <div className="space-y-4">
-              <div
-                className={`p-4 rounded-lg text-center ${
-                  feedback.correct
-                    ? "bg-green-100 text-green-800"
-                    : "bg-red-100 text-red-800"
-                }`}
-              >
+              <div className="p-4 rounded-lg text-center bg-red-100 text-red-800">
                 <div className="flex items-center justify-center gap-2">
-                  {feedback.correct ? (
-                    <Check className="w-5 h-5" />
-                  ) : (
-                    <X className="w-5 h-5" />
-                  )}
+                  <X className="w-5 h-5" />
                   {feedback.message}
                 </div>
               </div>
