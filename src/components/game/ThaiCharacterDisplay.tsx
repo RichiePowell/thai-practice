@@ -8,7 +8,7 @@ interface ThaiCharacterDisplayProps {
   size?: string;
   showFallback?: boolean;
   className?: string;
-  onSpeak?: (text: string) => void;
+  onManualSpeak?: (text: string) => void; // Renamed from onSpeak to onManualSpeak
   isPlaying?: boolean;
 }
 
@@ -17,7 +17,7 @@ const ThaiCharacterDisplay: React.FC<ThaiCharacterDisplayProps> = ({
   size = "text-4xl",
   showFallback = true,
   className = "",
-  onSpeak,
+  onManualSpeak,
   isPlaying = false,
 }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -66,11 +66,11 @@ const ThaiCharacterDisplay: React.FC<ThaiCharacterDisplayProps> = ({
       >
         {character}
       </div>
-      {onSpeak && (
+      {onManualSpeak && (
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => onSpeak(character)}
+          onClick={() => onManualSpeak(character)}
           className={`h-6 w-6 absolute -right-7 top-1/2 -translate-y-1/2 text-gray-500 hover:text-primary transition-colors ${
             isPlaying ? "text-primary" : ""
           }`}

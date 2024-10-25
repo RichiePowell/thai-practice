@@ -43,8 +43,9 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     category,
   });
 
-  const speak = (text: string) => {
-    if (!isSoundEnabled) return;
+  const speak = (text: string, isManualPlay: boolean = false) => {
+    // Only check sound enabled for auto-play, not manual play
+    if (!isManualPlay && !isSoundEnabled) return;
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "th-TH";
@@ -58,15 +59,16 @@ export const GameScreen: React.FC<GameScreenProps> = ({
       setIsPlaying(false);
     };
 
+    // Cancel any ongoing speech
+    speechSynthesis.cancel();
     speechSynthesis.speak(utterance);
   };
 
   // Auto speak when question changes
   useEffect(() => {
-    if (settings.autoSpeak && currentItem && !feedback && isSoundEnabled) {
-      speak(currentItem.thai);
+    if (settings.autoSpeak && currentItem && !feedback) {
+      speak(currentItem.thai); // Auto-play respects sound enabled setting
     }
-    // Remove isSoundEnabled from dependency array
   }, [currentItem, settings.autoSpeak, feedback]);
 
   return (
@@ -89,7 +91,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
               className={`transition-all duration-300 ${
                 feedback?.correct ? "text-green-500 dark:text-green-400" : ""
               }`}
-              onSpeak={isSoundEnabled ? speak : undefined}
+              onManualSpeak={() => speak(currentItem.thai, true)} // Manual play ignores sound enabled setting
               isPlaying={isPlaying}
             />
 
