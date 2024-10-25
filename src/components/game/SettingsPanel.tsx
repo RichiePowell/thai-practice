@@ -57,6 +57,17 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
         />
       </div>
 
+      <div className="flex items-center justify-between">
+        <Label htmlFor="auto-speak-toggle">Auto-Play Thai Pronunciation</Label>
+        <Switch
+          id="auto-speak-toggle"
+          checked={settings.autoSpeak}
+          onCheckedChange={(checked) =>
+            onSettingsChange({ ...settings, autoSpeak: checked })
+          }
+        />
+      </div>
+
       <div className="space-y-2">
         <Label>Questions per Round</Label>
         <Slider

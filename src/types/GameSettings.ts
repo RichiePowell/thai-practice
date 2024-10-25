@@ -3,4 +3,5 @@ export type GameSettings = {
   timerDuration: number;
   showRomanized: boolean;
   questionsPerRound: number;
+  autoSpeak: boolean; // New setting
 };

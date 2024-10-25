@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Check, X, Timer, Volume2, Home } from "lucide-react";
+import { X, Timer, Volume2, Home } from "lucide-react";
 import type { GameSettings } from "@/types/GameSettings";
 import type { LearningCategory } from "@/types/LearningCategory";
 import useGameLogic from "@/hooks/useGameLogic";
+import { useAudio } from "@/context/AudioContext";
 
 interface GameScreenProps {
   settings: GameSettings;
@@ -20,6 +21,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   onGameOver,
   onReturnToMenu,
 }) => {
+  const { isSoundEnabled } = useAudio();
   const {
     currentItem,
     options,
@@ -37,10 +39,18 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   });
 
   const speak = (text: string) => {
+    if (!isSoundEnabled) return;
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "th-TH";
     speechSynthesis.speak(utterance);
   };
+
+  // Auto-speak when new question appears
+  useEffect(() => {
+    if (settings.autoSpeak && currentItem && !feedback) {
+      speak(currentItem.thai);
+    }
+  }, [currentItem, settings.autoSpeak, feedback]);
 
   return (
     <>
@@ -91,6 +101,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
                 size="icon"
                 onClick={() => speak(currentItem.thai)}
                 className="rounded-full"
+                title="Play Pronunciation"
               >
                 <Volume2 className="w-5 h-5" />
               </Button>
