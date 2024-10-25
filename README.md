@@ -20,7 +20,7 @@ A React-based interactive game for learning Thai phrases and script. Built with 
 
 ## Tech Stack
 
-- [Next.js 13](https://nextjs.org/) with App Router
+- [Next.js 15](https://nextjs.org/) with App Router
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [shadcn/ui](https://ui.shadcn.com/) component library
