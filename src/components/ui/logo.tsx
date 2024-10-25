@@ -22,7 +22,7 @@ export const Logo: React.FC<LogoProps> = ({ className = "" }) => {
       </div>
 
       {/* Title with hover animation */}
-      <h1 className="text-xl font-bold text-primary">ThaiPhrases</h1>
+      <h1 className="text-xl font-bold text-primary">Thai Practice</h1>
 
       {/* Single gradient bar that matches the main logo */}
       <div className="mt-2 h-1 w-24 bg-gradient-to-r from-[#A51931] via-white to-primary rounded-full"></div>
