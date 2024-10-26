@@ -121,7 +121,7 @@ const useGameLogic = ({
   const handleTimeUp = useCallback(() => {
     if (!currentItem || feedback || !settings.timerEnabled) return;
 
-    playSound("/sounds/error.mp3");
+    playSound("error");
 
     setFeedback({
       correct: false,
@@ -144,7 +144,7 @@ const useGameLogic = ({
 
       if (isCorrect) {
         setScore((prev) => prev + 1);
-        playSound("/sounds/success.mp3");
+        playSound("success");
         setFeedback({
           correct: true,
           message: "",
@@ -160,7 +160,7 @@ const useGameLogic = ({
           }
         }, 500);
       } else {
-        playSound("/sounds/error.mp3");
+        playSound("error");
         setWrongAnswers((prev) => [
           ...prev,
           {
