@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Play, Settings } from "lucide-react";
+import { Play, Settings as SettingsIcon } from "lucide-react";
 import { SettingsPanel } from "./SettingsPanel";
 import type { GameSettings } from "@/types/GameSettings";
 import {
@@ -51,10 +51,10 @@ export const MainMenu: React.FC<MainMenuProps> = ({
               className="w-full flex items-center justify-between p-6 hover:bg-accent hover:text-accent-foreground"
             >
               <div className="flex items-center">
-                <Settings className="w-5 h-5 mr-2" />
+                <SettingsIcon className="w-5 h-5 mr-2" />
                 <h2 className="text-lg">Game Settings</h2>
               </div>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm">
                 {isSettingsOpen ? "Hide Settings" : "Show Settings"}
               </span>
             </Button>
