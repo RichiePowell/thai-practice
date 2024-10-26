@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Trophy, Volume2, X, Home } from "lucide-react";
@@ -13,6 +13,7 @@ import { LearningCategory } from "@/types/LearningCategory";
 import { CategorySelector } from "./CategorySelector";
 import { ContentItem } from "@/types/ContentTypes";
 import ThaiCharacterDisplay from "./ThaiCharacterDisplay";
+import { useAudio } from "@/context/AudioContext";
 
 type GameState = "menu" | "category-select" | "playing" | "gameOver";
 
@@ -28,17 +29,31 @@ export const ThaiPhraseGame = () => {
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
   const [selectedCategory, setSelectedCategory] =
     useState<LearningCategory | null>(null);
+  const { playSound } = useAudio();
 
-  const handleGameOver = (score: number, wrongAnswers: WrongAnswer[]) => {
-    const uniqueWrongAnswers = wrongAnswers.filter(
-      (answer, index, self) =>
-        index === self.findIndex((a) => a.question.id === answer.question.id)
-    );
+  const handleGameOver = useCallback(
+    (score: number, wrongAnswers: WrongAnswer[]) => {
+      // Calculate percentage
+      const percentage = (score / settings.questionsPerRound) * 100;
 
-    setFinalScore(score);
-    setWrongAnswers(uniqueWrongAnswers);
-    setGameState("gameOver");
-  };
+      // Play appropriate sound based on performance
+      if (percentage >= 80) {
+        playSound("complete");
+      } else if (percentage <= 40) {
+        playSound("failure");
+      }
+
+      const uniqueWrongAnswers = wrongAnswers.filter(
+        (answer, index, self) =>
+          index === self.findIndex((a) => a.question.id === answer.question.id)
+      );
+
+      setFinalScore(score);
+      setWrongAnswers(uniqueWrongAnswers);
+      setGameState("gameOver");
+    },
+    [settings.questionsPerRound, playSound]
+  );
 
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
