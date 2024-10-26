@@ -7,7 +7,6 @@ import { RefreshCw, Trophy, Volume2, X, Home } from "lucide-react";
 import { MainMenu } from "./MainMenu";
 import { GameScreen } from "./GameScreen";
 import type { GameSettings } from "@/types/GameSettings";
-import { DEFAULT_SETTINGS } from "@/constants/settings";
 import { Logo } from "../ui/logo";
 import { LearningCategory } from "@/types/LearningCategory";
 import { CategorySelector } from "./CategorySelector";
