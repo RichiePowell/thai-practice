@@ -8,6 +8,7 @@ import {
   useEffect,
   ReactNode,
 } from "react";
+import { loadStoredSettings, saveStoredSettings } from "@/lib/storage";
 
 interface AudioContextType {
   isSoundEnabled: boolean;
@@ -15,7 +16,6 @@ interface AudioContextType {
   playSound: (type: "success" | "error" | "complete" | "failure") => void;
 }
 
-// Create context with a default value
 const GameAudioContext = createContext<AudioContextType>({
   isSoundEnabled: true,
   toggleSound: () => {},
@@ -28,22 +28,28 @@ interface AudioProviderProps {
 
 export const AudioProvider = ({ children }: AudioProviderProps) => {
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  const [isAudioInitialized, setIsAudioInitialized] = useState(false);
   const successAudioRef = useRef<HTMLAudioElement | null>(null);
   const errorAudioRef = useRef<HTMLAudioElement | null>(null);
   const completeAudioRef = useRef<HTMLAudioElement | null>(null);
   const failureAudioRef = useRef<HTMLAudioElement | null>(null);
-  const [isAudioInitialized, setIsAudioInitialized] = useState(false);
 
+  // Load sound preference on mount
   useEffect(() => {
-    // Initialize and preload audio files
-    successAudioRef.current = new Audio("/sounds/success.mp3");
-    errorAudioRef.current = new Audio("/sounds/error.mp3");
-    completeAudioRef.current = new Audio("/sounds/complete.mp3");
-    failureAudioRef.current = new Audio("/sounds/failure.mp3");
+    const stored = loadStoredSettings();
+    setIsSoundEnabled(stored.sound);
+  }, []);
 
-    // Set up preloading
+  // Initialize audio files
+  useEffect(() => {
     const initializeAudio = async () => {
       try {
+        // Create audio elements
+        successAudioRef.current = new Audio("/sounds/success.mp3");
+        errorAudioRef.current = new Audio("/sounds/error.mp3");
+        completeAudioRef.current = new Audio("/sounds/complete.mp3");
+        failureAudioRef.current = new Audio("/sounds/failure.mp3");
+
         // Preload all audio files
         const audioRefs = [
           successAudioRef,
@@ -51,23 +57,31 @@ export const AudioProvider = ({ children }: AudioProviderProps) => {
           completeAudioRef,
           failureAudioRef,
         ];
+
         await Promise.all(
           audioRefs.map(async (ref) => {
             if (ref.current) {
               ref.current.preload = "auto";
-              await ref.current.load();
+              try {
+                await ref.current.load();
+              } catch (error) {
+                console.warn("Error preloading audio:", error);
+              }
             }
           })
         );
+
         setIsAudioInitialized(true);
       } catch (error) {
-        console.error("Error preloading audio:", error);
+        console.error("Error initializing audio:", error);
+        // Still mark as initialized even if there's an error to prevent infinite retries
+        setIsAudioInitialized(true);
       }
     };
 
     initializeAudio();
 
-    // Cleanup function
+    // Cleanup
     return () => {
       [
         successAudioRef,
@@ -84,7 +98,11 @@ export const AudioProvider = ({ children }: AudioProviderProps) => {
   }, []);
 
   const toggleSound = () => {
-    setIsSoundEnabled((prev) => !prev);
+    setIsSoundEnabled((prev) => {
+      const newValue = !prev;
+      saveStoredSettings({ sound: newValue });
+      return newValue;
+    });
   };
 
   const playSound = (type: "success" | "error" | "complete" | "failure") => {
@@ -104,11 +122,11 @@ export const AudioProvider = ({ children }: AudioProviderProps) => {
 
         if (playPromise !== undefined) {
           playPromise.catch((error) => {
-            console.error(`Error playing ${type} sound:`, error);
+            console.warn(`Error playing ${type} sound:`, error);
           });
         }
       } catch (error) {
-        console.error(`Error playing ${type} sound:`, error);
+        console.warn(`Error playing ${type} sound:`, error);
       }
     }
   };
@@ -122,5 +140,4 @@ export const AudioProvider = ({ children }: AudioProviderProps) => {
   );
 };
 
-// Export the hook after the context and provider are defined
 export const useAudio = () => useContext(GameAudioContext);

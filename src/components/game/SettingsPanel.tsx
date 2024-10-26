@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import type { GameSettings } from "@/types/GameSettings";
 import { GAME_CONFIG } from "@/constants/config";
+import { saveStoredSettings } from "@/lib/storage";
 
 interface SettingsPanelProps {
   settings: GameSettings;
@@ -16,6 +17,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
   settings,
   onSettingsChange,
 }) => {
+  // Save settings whenever they change
+  useEffect(() => {
+    saveStoredSettings({ game: settings });
+  }, [settings]);
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">

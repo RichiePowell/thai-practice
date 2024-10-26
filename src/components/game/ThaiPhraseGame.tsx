@@ -22,9 +22,13 @@ interface WrongAnswer {
   playerAnswer: ContentItem;
 }
 
-export const ThaiPhraseGame = () => {
+interface ThaiPhraseGameProps {
+  initialSettings: GameSettings;
+}
+
+export const ThaiPhraseGame = ({ initialSettings }: ThaiPhraseGameProps) => {
   const [gameState, setGameState] = useState<GameState>("menu");
-  const [settings, setSettings] = useState<GameSettings>(DEFAULT_SETTINGS);
+  const [settings, setSettings] = useState<GameSettings>(initialSettings);
   const [finalScore, setFinalScore] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
   const [selectedCategory, setSelectedCategory] =
