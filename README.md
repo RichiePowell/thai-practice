@@ -2,6 +2,8 @@
 
 A React-based interactive game for learning Thai phrases and script. Built with Next.js, TypeScript, and Tailwind CSS, utilizing the shadcn/ui component library.
 
+<img width="821" alt="Screenshot 2024-10-28 at 15 09 09" src="https://github.com/user-attachments/assets/28cb3621-a95c-4c11-acce-cfcdca70c46c">
+
 ## Features
 
 - Multiple learning categories covering Thai script, common phrases, numbers, and more
