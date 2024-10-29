@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AlertCircle, Volume2 } from "lucide-react";
+import { AlertCircle, Volume2, VolumeX } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { useSpeech } from "@/hooks/useSpeech";
@@ -23,17 +23,10 @@ const ThaiCharacterDisplay: React.FC<ThaiCharacterDisplayProps> = ({
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState(false);
+
   const { speak, isSupported } = useSpeech({
     onPlayStateChange: setIsPlaying,
   });
-
-  const handleSpeak = () => {
-    if (onManualSpeak) {
-      onManualSpeak(character);
-    } else if (isSupported) {
-      speak(character, true);
-    }
-  };
 
   useEffect(() => {
     // Create a canvas to test if the character can be rendered
@@ -50,6 +43,15 @@ const ThaiCharacterDisplay: React.FC<ThaiCharacterDisplayProps> = ({
     }
     setIsLoaded(true);
   }, [character]);
+
+  const handleSpeak = () => {
+    if (onManualSpeak) {
+      onManualSpeak(character);
+    } else if (isSupported) {
+      // Always pass true for manual play when user clicks the button
+      speak(character, true);
+    }
+  };
 
   if (!isLoaded) {
     return (
@@ -78,18 +80,21 @@ const ThaiCharacterDisplay: React.FC<ThaiCharacterDisplayProps> = ({
       >
         {character}
       </div>
-      {onManualSpeak && (
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleSpeak}
-          className={`h-6 w-6 absolute -right-7 top-1/2 -translate-y-1/2 text-gray-500 hover:text-primary dark:hover:text-black transition-colors ${
-            isPlaying ? "text-primary" : ""
-          }`}
-        >
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={handleSpeak}
+        className={`h-6 w-6 absolute -right-7 top-1/2 -translate-y-1/2 text-gray-500 hover:text-primary dark:hover:text-black transition-colors ${
+          isPlaying ? "text-primary" : ""
+        }`}
+        disabled={!isSupported && !onManualSpeak}
+      >
+        {isSupported || onManualSpeak ? (
           <Volume2 className={`h-3 w-3 ${isPlaying ? "animate-pulse" : ""}`} />
-        </Button>
-      )}
+        ) : (
+          <VolumeX className="h-3 w-3" />
+        )}
+      </Button>
     </div>
   );
 };

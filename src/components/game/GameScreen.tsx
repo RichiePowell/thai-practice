@@ -9,7 +9,6 @@ import useGameLogic from "@/hooks/useGameLogic";
 import ThaiCharacterDisplay from "./ThaiCharacterDisplay";
 import GameHeader from "./GameHeader";
 import { WrongAnswer } from "@/types/WrongAnswerType";
-import { useAudio } from "@/context/AudioContext";
 import { useSpeech } from "@/hooks/useSpeech";
 
 interface GameScreenProps {
@@ -25,6 +24,11 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   onGameOver,
   onReturnToMenu,
 }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const { speak, isSupported } = useSpeech({
+    onPlayStateChange: setIsPlaying,
+  });
+
   const {
     currentItem,
     options,
@@ -41,13 +45,18 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     category,
   });
 
-  const { speak, isSupported } = useSpeech();
-
+  // Auto speak when question changes
   useEffect(() => {
     if (settings.autoSpeak && currentItem && !feedback && isSupported) {
-      speak(currentItem.thai);
+      // Pass false for auto-play to respect sound enabled setting
+      speak(currentItem.thai, false);
     }
   }, [currentItem, settings.autoSpeak, feedback, isSupported, speak]);
+
+  const handleManualSpeak = (text: string) => {
+    // Pass true for manual play to always play regardless of sound setting
+    speak(text, true);
+  };
 
   return (
     <div className="space-y-6">
@@ -69,7 +78,8 @@ export const GameScreen: React.FC<GameScreenProps> = ({
               className={`transition-all duration-300 ${
                 feedback?.correct ? "text-green-500 dark:text-green-400" : ""
               }`}
-              onManualSpeak={() => speak(currentItem.thai, true)} // Manual play ignores sound enabled setting
+              onManualSpeak={handleManualSpeak}
+              isPlaying={isPlaying}
             />
 
             {settings.showRomanized && (
