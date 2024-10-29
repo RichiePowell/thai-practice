@@ -143,14 +143,6 @@ export const ThaiPhraseGame = ({ initialSettings }: ThaiPhraseGameProps) => {
                             character={wrong.question.thai}
                             size="text-2xl"
                           />
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => speak(wrong.question.thai)}
-                            className="h-8 w-8 rounded-full"
-                          >
-                            <Volume2 className="w-4 h-4" />
-                          </Button>
                         </div>
                         <span className="text-muted-foreground text-sm">
                           {wrong.question.romanized}
