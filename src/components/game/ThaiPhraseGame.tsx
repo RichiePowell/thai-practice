@@ -3,7 +3,7 @@
 import React, { useCallback, useState } from "react";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, Trophy, Volume2, X, Home } from "lucide-react";
+import { RefreshCw, Trophy, X, Home } from "lucide-react";
 import { MainMenu } from "./MainMenu";
 import { GameScreen } from "./GameScreen";
 import type { GameSettings } from "@/types/GameSettings";
