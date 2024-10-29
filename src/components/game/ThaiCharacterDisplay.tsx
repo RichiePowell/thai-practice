@@ -71,7 +71,7 @@ const ThaiCharacterDisplay: React.FC<ThaiCharacterDisplayProps> = ({
           variant="ghost"
           size="icon"
           onClick={() => onManualSpeak(character)}
-          className={`h-6 w-6 absolute -right-7 top-1/2 -translate-y-1/2 text-gray-500 hover:text-primary transition-colors ${
+          className={`h-6 w-6 absolute -right-7 top-1/2 -translate-y-1/2 text-gray-500 hover:text-primary dark:hover:text-black transition-colors ${
             isPlaying ? "text-primary" : ""
           }`}
         >

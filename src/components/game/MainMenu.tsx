@@ -10,6 +10,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { Logo } from "../ui/logo";
 
 interface MainMenuProps {
   onStartGame: () => void;
