@@ -9,8 +9,8 @@ interface ThaiCharacterDisplayProps {
   size?: string;
   showFallback?: boolean;
   className?: string;
-  onManualSpeak?: (text: string) => void;
   isPlaying?: boolean;
+  isSupported?: boolean;
 }
 
 const ThaiCharacterDisplay: React.FC<ThaiCharacterDisplayProps> = ({
@@ -18,15 +18,19 @@ const ThaiCharacterDisplay: React.FC<ThaiCharacterDisplayProps> = ({
   size = "text-4xl",
   showFallback = true,
   className = "",
-  onManualSpeak,
+  isPlaying: externalIsPlaying = false,
+  isSupported: externalIsSupported = false,
 }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [localIsPlaying, setLocalIsPlaying] = useState(false);
 
-  const { speak, isSupported } = useSpeech({
-    onPlayStateChange: setIsPlaying,
+  const { speak, isSupported: hookIsSupported } = useSpeech({
+    onPlayStateChange: setLocalIsPlaying,
   });
+
+  const isPlaying = externalIsPlaying || localIsPlaying;
+  const isAudioSupported = externalIsSupported || hookIsSupported;
 
   useEffect(() => {
     // Create a canvas to test if the character can be rendered
@@ -45,10 +49,7 @@ const ThaiCharacterDisplay: React.FC<ThaiCharacterDisplayProps> = ({
   }, [character]);
 
   const handleSpeak = () => {
-    if (onManualSpeak) {
-      onManualSpeak(character);
-    } else if (isSupported) {
-      // Always pass true for manual play when user clicks the button
+    if (isAudioSupported) {
       speak(character, true);
     }
   };
@@ -87,9 +88,9 @@ const ThaiCharacterDisplay: React.FC<ThaiCharacterDisplayProps> = ({
         className={`h-6 w-6 absolute -right-7 top-1/2 -translate-y-1/2 text-gray-500 hover:text-primary dark:hover:text-black transition-colors ${
           isPlaying ? "text-primary" : ""
         }`}
-        disabled={!isSupported && !onManualSpeak}
+        disabled={!isAudioSupported}
       >
-        {isSupported || onManualSpeak ? (
+        {isAudioSupported ? (
           <Volume2 className={`h-3 w-3 ${isPlaying ? "animate-pulse" : ""}`} />
         ) : (
           <VolumeX className="h-3 w-3" />

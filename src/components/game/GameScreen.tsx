@@ -52,10 +52,6 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     }
   }, [currentItem, settings.autoSpeak, feedback, isSupported, speak]);
 
-  const handleManualSpeak = (text: string) => {
-    speak(text, true);
-  };
-
   const getOptionStyles = (option: ContentItem) => {
     const baseStyles = `p-4 h-auto text-left transition-all duration-300
       border-2 relative overflow-hidden font-medium
@@ -140,8 +136,8 @@ export const GameScreen: React.FC<GameScreenProps> = ({
                   ? "text-emerald-500 dark:text-emerald-400"
                   : "text-foreground"
               }`}
-              onManualSpeak={handleManualSpeak}
               isPlaying={isPlaying}
+              isSupported={isSupported}
             />
 
             {settings.showRomanized && (
