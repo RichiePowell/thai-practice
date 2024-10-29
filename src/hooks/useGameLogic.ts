@@ -147,7 +147,7 @@ const useGameLogic = ({
         playSound("success");
         setFeedback({
           correct: true,
-          message: "",
+          selectedId: selected.id,
         });
         setTimeout(() => {
           const newTotal = totalQuestions + 1;
@@ -171,8 +171,7 @@ const useGameLogic = ({
 
         setFeedback({
           correct: false,
-          message: `Incorrect. The answer was:`,
-          answer: currentItem.meaning,
+          selectedId: selected.id,
         });
         setCanProceed(true);
       }
