@@ -16,7 +16,7 @@ export default function Home() {
   }, []);
 
   if (!initialSettings) {
-    return null; // or a loading spinner
+    return null;
   }
 
   return (

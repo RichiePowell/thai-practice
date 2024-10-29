@@ -58,24 +58,29 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 
   const getOptionStyles = (option: ContentItem) => {
     const baseStyles = `p-4 h-auto text-left transition-all duration-300
-      border-2 relative overflow-hidden font-medium`;
+      border-2 relative overflow-hidden font-medium
+      touch-none select-none
+      -webkit-tap-highlight-color-transparent`;
 
     if (!feedback) {
       return `${baseStyles}
         dark:border-primary/30
         hover:border-primary dark:hover:border-primary
         hover:bg-primary/10 dark:hover:bg-primary/20
-        hover:text-foreground dark:hover:text-foreground`;
+        hover:text-foreground dark:hover:text-foreground
+        active:border-primary dark:active:border-primary`;
     }
 
     if (option.id === currentItem?.id) {
       // Correct answer - vibrant and celebratory
       return `${baseStyles}
-        scale-105
         bg-emerald-500 dark:bg-emerald-600 
+        hover:bg-emerald-500 dark:hover:bg-emerald-600 
         text-white dark:text-white
+        scale-105 hover:text-white
         border-emerald-400 dark:border-emerald-500
         shadow-lg shadow-emerald-500/20 dark:shadow-emerald-500/40
+        active:bg-emerald-500 dark:active:bg-emerald-600
         disabled:opacity-100`;
     }
 
@@ -83,9 +88,11 @@ export const GameScreen: React.FC<GameScreenProps> = ({
       // Incorrect selected answer - clear error state
       return `${baseStyles}
         bg-red-100 dark:bg-red-900
+        hover:bg-red-100 hover:dark:bg-red-900
         border-red-500 dark:border-red-500
         text-black dark:text-white
-        shadow-lg shadow-red-500/20 dark:shadow-red-500/40`;
+        shadow-lg shadow-red-500/20 dark:shadow-red-500/40
+        active:bg-red-500 dark:active:bg-red-500`;
     }
 
     // Unselected options - visible but secondary
@@ -93,7 +100,8 @@ export const GameScreen: React.FC<GameScreenProps> = ({
       border-primary/30 dark:border-primary/30
       bg-background dark:bg-background
       text-foreground/70 dark:text-foreground/70
-      hover:text-foreground/90 dark:hover:text-foreground/90`;
+      hover:text-foreground/90 dark:hover:text-foreground/90
+      active:text-foreground/90 dark:active:text-foreground/90`;
   };
 
   const getIconStyles = (option: ContentItem) => {
@@ -151,6 +159,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
                 className={getOptionStyles(option)}
                 variant="outline"
                 disabled={!!feedback}
+                style={{ WebkitTapHighlightColor: "transparent" }}
               >
                 <span className="flex items-center justify-between w-full">
                   <span className="font-bold">{option.meaning}</span>
