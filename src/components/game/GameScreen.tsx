@@ -25,9 +25,6 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   onGameOver,
   onReturnToMenu,
 }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const { isSoundEnabled } = useAudio();
-
   const {
     currentItem,
     options,
@@ -73,7 +70,6 @@ export const GameScreen: React.FC<GameScreenProps> = ({
                 feedback?.correct ? "text-green-500 dark:text-green-400" : ""
               }`}
               onManualSpeak={() => speak(currentItem.thai, true)} // Manual play ignores sound enabled setting
-              isPlaying={isPlaying}
             />
 
             {settings.showRomanized && (
