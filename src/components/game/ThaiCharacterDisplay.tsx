@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { AlertCircle, Volume2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { useSpeech } from "@/hooks/useSpeech";
 
 interface ThaiCharacterDisplayProps {
   character: string;
   size?: string;
   showFallback?: boolean;
   className?: string;
-  onManualSpeak?: (text: string) => void; // Renamed from onSpeak to onManualSpeak
+  onManualSpeak?: (text: string) => void;
   isPlaying?: boolean;
 }
 
@@ -18,10 +19,21 @@ const ThaiCharacterDisplay: React.FC<ThaiCharacterDisplayProps> = ({
   showFallback = true,
   className = "",
   onManualSpeak,
-  isPlaying = false,
 }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const { speak, isSupported } = useSpeech({
+    onPlayStateChange: setIsPlaying,
+  });
+
+  const handleSpeak = () => {
+    if (onManualSpeak) {
+      onManualSpeak(character);
+    } else if (isSupported) {
+      speak(character, true);
+    }
+  };
 
   useEffect(() => {
     // Create a canvas to test if the character can be rendered
@@ -70,7 +82,7 @@ const ThaiCharacterDisplay: React.FC<ThaiCharacterDisplayProps> = ({
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => onManualSpeak(character)}
+          onClick={handleSpeak}
           className={`h-6 w-6 absolute -right-7 top-1/2 -translate-y-1/2 text-gray-500 hover:text-primary transition-colors ${
             isPlaying ? "text-primary" : ""
           }`}

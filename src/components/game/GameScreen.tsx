@@ -10,6 +10,7 @@ import ThaiCharacterDisplay from "./ThaiCharacterDisplay";
 import GameHeader from "./GameHeader";
 import { WrongAnswer } from "@/types/WrongAnswerType";
 import { useAudio } from "@/context/AudioContext";
+import { useSpeech } from "@/hooks/useSpeech";
 
 interface GameScreenProps {
   settings: GameSettings;
@@ -43,33 +44,13 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     category,
   });
 
-  const speak = (text: string, isManualPlay: boolean = false) => {
-    // Only check sound enabled for auto-play, not manual play
-    if (!isManualPlay && !isSoundEnabled) return;
+  const { speak, isSupported } = useSpeech();
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "th-TH";
-    setIsPlaying(true);
-
-    utterance.onend = () => {
-      setIsPlaying(false);
-    };
-
-    utterance.onerror = () => {
-      setIsPlaying(false);
-    };
-
-    // Cancel any ongoing speech
-    speechSynthesis.cancel();
-    speechSynthesis.speak(utterance);
-  };
-
-  // Auto speak when question changes
   useEffect(() => {
-    if (settings.autoSpeak && currentItem && !feedback) {
-      speak(currentItem.thai); // Auto-play respects sound enabled setting
+    if (settings.autoSpeak && currentItem && !feedback && isSupported) {
+      speak(currentItem.thai);
     }
-  }, [currentItem, settings.autoSpeak, feedback]);
+  }, [currentItem, settings.autoSpeak, feedback, isSupported, speak]);
 
   return (
     <div className="space-y-6">
