@@ -123,7 +123,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 
       {currentItem && (
         <div className="space-y-6">
-          <div className="text-center py-10">
+          <div className="text-center py-12">
             <ThaiCharacterDisplay
               character={currentItem.thai}
               size="text-5xl"
