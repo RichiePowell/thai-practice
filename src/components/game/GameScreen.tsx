@@ -10,6 +10,7 @@ import ThaiCharacterDisplay from "./ThaiCharacterDisplay";
 import GameHeader from "./GameHeader";
 import { WrongAnswer } from "@/types/WrongAnswerType";
 import { useSpeech } from "@/hooks/useSpeech";
+import { ContentItem } from "@/types/ContentTypes";
 
 interface GameScreenProps {
   settings: GameSettings;
@@ -55,7 +56,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     speak(text, true);
   };
 
-  const getOptionStyles = (option: any) => {
+  const getOptionStyles = (option: ContentItem) => {
     const baseStyles = `p-4 h-auto text-left transition-all duration-300
       border-2 relative overflow-hidden font-medium`;
 
