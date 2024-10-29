@@ -123,7 +123,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 
       {currentItem && (
         <div className="space-y-6">
-          <div className="text-center">
+          <div className="text-center py-10">
             <ThaiCharacterDisplay
               character={currentItem.thai}
               size="text-5xl"
@@ -167,14 +167,23 @@ export const GameScreen: React.FC<GameScreenProps> = ({
             ))}
           </div>
 
-          {canProceed && (
+          {/* Reserve space for the continue button */}
+          <div className="h-[44px] relative">
+            {" "}
+            {/* 44px matches the default Button height */}
             <Button
               onClick={handleNextQuestion}
-              className="w-full bg-primary hover:bg-primary/90 transition-all duration-300 animate-fade-in"
+              className={`w-full bg-primary hover:bg-primary/90 transition-all duration-300
+                absolute top-0 left-0 right-0
+                ${
+                  canProceed
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-2 pointer-events-none"
+                }`}
             >
               Continue to Next Question
             </Button>
-          )}
+          </div>
         </div>
       )}
     </div>
