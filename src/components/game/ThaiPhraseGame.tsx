@@ -111,7 +111,7 @@ export const ThaiPhraseGame = ({ initialSettings }: ThaiPhraseGameProps) => {
         )}
 
         {gameState === "gameOver" && (
-          <div className="space-y-6 pt-6">
+          <div className="space-y-6 pt-6 mt-6">
             <div className="text-center space-y-4">
               <Trophy className="w-16 h-16 mx-auto text-yellow-500 dark:text-yellow-400" />
               <p className="text-xl font-bold text-foreground">Game Over!</p>
