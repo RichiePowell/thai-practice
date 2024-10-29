@@ -96,7 +96,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
       hover:text-foreground/90 dark:hover:text-foreground/90`;
   };
 
-  const getIconStyles = (option: any) => {
+  const getIconStyles = (option: ContentItem) => {
     const baseStyles = "w-5 h-5 shrink-0 ml-2";
 
     if (option.id === currentItem?.id) {
