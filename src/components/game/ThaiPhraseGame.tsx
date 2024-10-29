@@ -58,12 +58,6 @@ export const ThaiPhraseGame = ({ initialSettings }: ThaiPhraseGameProps) => {
     [settings.questionsPerRound, playSound]
   );
 
-  const speak = (text: string) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "th-TH";
-    speechSynthesis.speak(utterance);
-  };
-
   const handleReturnToMenu = () => {
     setGameState("menu");
     setWrongAnswers([]);
