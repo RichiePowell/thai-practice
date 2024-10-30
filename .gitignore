@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+repopack-output.txt
 
 # debug
 npm-debug.log*
