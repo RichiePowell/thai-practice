@@ -25,6 +25,7 @@ import {
 import type { LearningCategory } from "@/types/LearningCategory";
 import { LEARNING_CATEGORIES } from "@/constants/categories";
 import { getCategoryItemCount } from "@/constants/content";
+import FilterBar from "./FilterBar";
 
 const iconMap = {
   GraduationCap,
@@ -113,56 +114,13 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-2 ">
-        {/* Difficulty filters */}
-        <div className="flex gap-2 items-center">
-          <Filter className="w-4 h-4" />
-          <Button
-            variant={difficulty === "all" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setDifficulty("all")}
-          >
-            All
-          </Button>
-          <Button
-            variant={difficulty === "beginner" ? "default" : "outline"}
-            size="sm"
-            className={difficulty === "beginner" ? "bg-green-600" : ""}
-            onClick={() => setDifficulty("beginner")}
-          >
-            Beginner
-          </Button>
-          <Button
-            variant={difficulty === "intermediate" ? "default" : "outline"}
-            size="sm"
-            className={difficulty === "intermediate" ? "bg-blue-600" : ""}
-            onClick={() => setDifficulty("intermediate")}
-          >
-            Intermediate
-          </Button>
-          <Button
-            variant={difficulty === "advanced" ? "default" : "outline"}
-            size="sm"
-            className={difficulty === "advanced" ? "bg-purple-600" : ""}
-            onClick={() => setDifficulty("advanced")}
-          >
-            Advanced
-          </Button>
-        </div>
-
-        {/* Clear selection button - only show when categories are selected */}
-        {selectedCategories.size > 0 && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleClearSelection}
-            className="ml-auto border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground dark:border-destructive dark:text-destructive dark:hover:bg-destructive dark:hover:text-destructive-foreground transition-colors"
-          >
-            <X className="w-4 h-4 mr-1" />
-            Clear Selection
-          </Button>
-        )}
-      </div>
+      <FilterBar
+        difficulty={difficulty}
+        onDifficultyChange={setDifficulty}
+        selectedCount={selectedCategories.size}
+        onClearSelection={handleClearSelection}
+        className="mb-4"
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filteredCategories.map((category) => {
