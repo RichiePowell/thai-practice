@@ -182,7 +182,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
                     : "opacity-0 translate-y-2 pointer-events-none"
                 }`}
             >
-              Continue to Next Question
+              Continue to next question
             </Button>
           </div>
         </div>
