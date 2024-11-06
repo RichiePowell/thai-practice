@@ -17,7 +17,6 @@ import {
   Users2,
   Palette,
   HelpCircle,
-  SortAsc,
   Filter,
   Type,
   Check,
@@ -46,7 +45,6 @@ const iconMap = {
 } as const;
 
 type Difficulty = "all" | "beginner" | "intermediate" | "advanced";
-type SortOption = "default" | "alphabetical" | "items";
 
 interface CategorySelectorProps {
   onSelectCategories: (categories: LearningCategory[]) => void;
@@ -65,12 +63,11 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
   onSelectCategories,
 }) => {
   const [difficulty, setDifficulty] = useState<Difficulty>("all");
-  const [sortOption, setSortOption] = useState<SortOption>("default");
   const [selectedCategories, setSelectedCategories] = useState<Set<string>>(
     new Set()
   );
 
-  const filteredAndSortedCategories = useMemo(() => {
+  const filteredCategories = useMemo(() => {
     let categories = [...LEARNING_CATEGORIES];
 
     if (difficulty !== "all") {
@@ -79,17 +76,8 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
       );
     }
 
-    switch (sortOption) {
-      case "alphabetical":
-        return categories.sort((a, b) => a.title.localeCompare(b.title));
-      case "items":
-        return categories.sort(
-          (a, b) => getCategoryItemCount(b.id) - getCategoryItemCount(a.id)
-        );
-      default:
-        return categories;
-    }
-  }, [difficulty, sortOption]);
+    return categories;
+  }, [difficulty]);
 
   const handleCategoryClick = (category: LearningCategory) => {
     setSelectedCategories((prev) => {
@@ -162,32 +150,6 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
           </Button>
         </div>
 
-        {/* Sort options */}
-        <div className="flex gap-2 items-center">
-          <SortAsc className="w-4 h-4" />
-          <Button
-            variant={sortOption === "default" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setSortOption("default")}
-          >
-            Default
-          </Button>
-          <Button
-            variant={sortOption === "alphabetical" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setSortOption("alphabetical")}
-          >
-            A-Z
-          </Button>
-          <Button
-            variant={sortOption === "items" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setSortOption("items")}
-          >
-            Most Items
-          </Button>
-        </div>
-
         {/* Clear selection button - only show when categories are selected */}
         {selectedCategories.size > 0 && (
           <Button
@@ -203,7 +165,7 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {filteredAndSortedCategories.map((category) => {
+        {filteredCategories.map((category) => {
           const Icon = iconMap[category.icon as keyof typeof iconMap];
           const itemCount = getCategoryItemCount(category.id);
           const isSelected = selectedCategories.has(category.id);
