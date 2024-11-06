@@ -110,51 +110,41 @@ const useGameLogic = ({
         const categoryContent = CATEGORY_CONTENT[category.id];
 
         if (categoryContent?.settings?.restrictAnswersToCategory) {
-          // If this category is restricted, only use answers from this category
+          // If this category is restricted, ONLY use answers from this category
           wrongAnswerPool = categoryContent.items.filter(
             (item) => item.id !== correct.id
           );
+
+          // If we don't have enough answers in the restricted category,
+          // we'll just use what we have rather than breaking the restriction
+          if (wrongAnswerPool.length < 3) {
+            console.warn(
+              `Category ${category.id} has fewer than 3 items for wrong answers. Using available ${wrongAnswerPool.length} items.`
+            );
+          }
         } else {
-          // For unrestricted categories, we need to:
-          // 1. Exclude the current item
-          // 2. Only include items from the same category or other unrestricted categories
+          // For unrestricted categories, exclude ALL items from restricted categories
           wrongAnswerPool = allItemsRef.current.filter((item) => {
             // Skip the current item
             if (item.id === correct.id) return false;
 
             // Find the category of this potential answer
             const itemCategory = findCategoryForItem(item);
-            if (!itemCategory) return false; // If we can't find the category, exclude it
+            if (!itemCategory) return false;
 
             const itemCategoryContent = CATEGORY_CONTENT[itemCategory.id];
 
-            // If the item's category is restricted, exclude it
-            if (itemCategoryContent?.settings?.restrictAnswersToCategory) {
-              return false;
-            }
-
-            // Include items from same category or other unrestricted categories
-            return true;
+            // Never include items from restricted categories
+            return !itemCategoryContent?.settings?.restrictAnswersToCategory;
           });
         }
       }
 
-      // Ensure we have enough wrong answers
-      if (wrongAnswerPool.length < 3) {
-        console.warn(
-          "Not enough wrong answers in pool:",
-          wrongAnswerPool.length
-        );
-        // Fallback to using all items from all selected categories
-        const fallbackPool = allItemsRef.current.filter(
-          (item) => item.id !== correct.id
-        );
-        wrongAnswerPool = fallbackPool;
-      }
-
+      // Get as many wrong options as we can (up to 3)
+      const maxWrongOptions = Math.min(3, wrongAnswerPool.length);
       const wrongOptions = wrongAnswerPool
         .sort(() => Math.random() - 0.5)
-        .slice(0, 3);
+        .slice(0, maxWrongOptions);
 
       const allOptions = [...wrongOptions, correct].sort(
         () => Math.random() - 0.5
