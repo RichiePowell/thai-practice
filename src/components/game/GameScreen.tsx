@@ -38,7 +38,6 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     canProceed,
     handleAnswer,
     handleNextQuestion,
-    currentCategory,
   } = useGameLogic({
     settings,
     onGameOver,
