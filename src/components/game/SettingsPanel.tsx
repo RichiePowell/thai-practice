@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -23,6 +23,17 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
   // Save settings whenever they change
   useEffect(() => {
     saveStoredSettings({ game: settings });
+  }, [settings]);
+
+  // Check if any settings have been modified from their default values
+  const hasChanges = useMemo(() => {
+    return (
+      settings.timerEnabled !== DEFAULT_SETTINGS.timerEnabled ||
+      settings.timerDuration !== DEFAULT_SETTINGS.timerDuration ||
+      settings.showRomanized !== DEFAULT_SETTINGS.showRomanized ||
+      settings.autoSpeak !== DEFAULT_SETTINGS.autoSpeak ||
+      settings.questionsPerRound !== DEFAULT_SETTINGS.questionsPerRound
+    );
   }, [settings]);
 
   const handleResetSettings = () => {
@@ -105,16 +116,18 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
         </div>
       </div>
 
-      <div className="border-t pt-4">
-        <Button
-          variant="outline"
-          onClick={handleResetSettings}
-          className="w-full border-dashed"
-        >
-          <RefreshCw className="mr-2 h-4 w-4" />
-          Reset to default settings
-        </Button>
-      </div>
+      {hasChanges && (
+        <div className="border-t pt-4">
+          <Button
+            variant="outline"
+            onClick={handleResetSettings}
+            className="w-full border-dashed group"
+          >
+            <RefreshCw className="mr-2 h-4 w-4 transition-transform group-hover:rotate-180" />
+            Reset to default settings
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
