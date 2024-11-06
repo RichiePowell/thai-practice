@@ -17,10 +17,8 @@ import {
   Users2,
   Palette,
   HelpCircle,
-  Filter,
   Type,
   Check,
-  X,
 } from "lucide-react";
 import type { LearningCategory } from "@/types/LearningCategory";
 import { LEARNING_CATEGORIES } from "@/constants/categories";
