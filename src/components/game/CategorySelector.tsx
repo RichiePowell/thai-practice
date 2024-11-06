@@ -21,11 +21,11 @@ import {
   Filter,
   Type,
   Check,
+  X,
 } from "lucide-react";
 import type { LearningCategory } from "@/types/LearningCategory";
 import { LEARNING_CATEGORIES } from "@/constants/categories";
 import { getCategoryItemCount } from "@/constants/content";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const iconMap = {
   GraduationCap,
@@ -73,14 +73,12 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
   const filteredAndSortedCategories = useMemo(() => {
     let categories = [...LEARNING_CATEGORIES];
 
-    // Filter by difficulty
     if (difficulty !== "all") {
       categories = categories.filter(
         (category) => category.difficulty === difficulty
       );
     }
 
-    // Sort categories
     switch (sortOption) {
       case "alphabetical":
         return categories.sort((a, b) => a.title.localeCompare(b.title));
@@ -105,23 +103,16 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
     });
   };
 
+  const handleClearSelection = () => {
+    setSelectedCategories(new Set());
+  };
+
   const handleStartLearning = () => {
     const selectedCategoryObjects = LEARNING_CATEGORIES.filter((category) =>
       selectedCategories.has(category.id)
     );
     onSelectCategories(selectedCategoryObjects);
   };
-
-  if (LEARNING_CATEGORIES.length === 0) {
-    return (
-      <div className="text-center p-8">
-        <h2 className="text-2xl font-bold text-primary mb-4">Coming Soon!</h2>
-        <p className="text-muted-foreground">
-          We&apos;re working on adding learning content.
-        </p>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6">
@@ -134,7 +125,7 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-2 justify-center">
+      <div className="flex flex-wrap gap-2 ">
         {/* Difficulty filters */}
         <div className="flex gap-2 items-center">
           <Filter className="w-4 h-4" />
@@ -172,7 +163,7 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
         </div>
 
         {/* Sort options */}
-        <div className="flex gap-2 items-center ml-4">
+        <div className="flex gap-2 items-center">
           <SortAsc className="w-4 h-4" />
           <Button
             variant={sortOption === "default" ? "default" : "outline"}
@@ -196,6 +187,19 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
             Most Items
           </Button>
         </div>
+
+        {/* Clear selection button - only show when categories are selected */}
+        {selectedCategories.size > 0 && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleClearSelection}
+            className="ml-auto border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground dark:border-destructive dark:text-destructive dark:hover:bg-destructive dark:hover:text-destructive-foreground transition-colors"
+          >
+            <X className="w-4 h-4 mr-1" />
+            Clear Selection
+          </Button>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -267,13 +271,7 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
             <Button
               size="lg"
               className="w-full bg-primary hover:bg-primary/90"
-              onClick={() =>
-                onSelectCategories(
-                  LEARNING_CATEGORIES.filter((category) =>
-                    selectedCategories.has(category.id)
-                  )
-                )
-              }
+              onClick={handleStartLearning}
             >
               Start Game ({selectedCategories.size}{" "}
               {selectedCategories.size === 1 ? "category" : "categories"})
