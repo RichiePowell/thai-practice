@@ -145,13 +145,11 @@ const useGameLogic = ({
           "Not enough wrong answers in pool:",
           wrongAnswerPool.length
         );
-        // Fallback to same category items if pool is too small
-        const categoryContent = CATEGORY_CONTENT[category?.id ?? ""];
-        if (categoryContent) {
-          wrongAnswerPool = categoryContent.items.filter(
-            (item) => item.id !== correct.id
-          );
-        }
+        // Fallback to using all items from all selected categories
+        const fallbackPool = allItemsRef.current.filter(
+          (item) => item.id !== correct.id
+        );
+        wrongAnswerPool = fallbackPool;
       }
 
       const wrongOptions = wrongAnswerPool
