@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { X, Check } from "lucide-react";
@@ -14,14 +12,14 @@ import { ContentItem } from "@/types/ContentTypes";
 
 interface GameScreenProps {
   settings: GameSettings;
-  category: LearningCategory;
+  categories: LearningCategory[]; // Changed from single category to array
   onGameOver: (score: number, wrongAnswers: WrongAnswer[]) => void;
   onReturnToMenu: () => void;
 }
 
 export const GameScreen: React.FC<GameScreenProps> = ({
   settings,
-  category,
+  categories,
   onGameOver,
   onReturnToMenu,
 }) => {
@@ -40,10 +38,11 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     canProceed,
     handleAnswer,
     handleNextQuestion,
+    currentCategory,
   } = useGameLogic({
     settings,
     onGameOver,
-    category,
+    categories, // Pass all selected categories
   });
 
   useEffect(() => {
@@ -68,7 +67,6 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     }
 
     if (option.id === currentItem?.id) {
-      // Correct answer - vibrant and celebratory
       return `${baseStyles}
         bg-emerald-500 dark:bg-emerald-600 
         hover:bg-emerald-500 dark:hover:bg-emerald-600 
@@ -77,27 +75,27 @@ export const GameScreen: React.FC<GameScreenProps> = ({
         border-emerald-400 dark:border-emerald-500
         shadow-lg shadow-emerald-500/20 dark:shadow-emerald-500/40
         active:bg-emerald-500 dark:active:bg-emerald-600
-        disabled:opacity-100`;
+        disabled:opacity-100 cursor-default`;
     }
 
     if (feedback && !feedback.correct && option.id === feedback.selectedId) {
-      // Incorrect selected answer - clear error state
       return `${baseStyles}
         bg-red-100 dark:bg-red-900
         hover:bg-red-100 hover:dark:bg-red-900
         border-red-500 dark:border-red-500
         text-black dark:text-white
         shadow-lg shadow-red-500/20 dark:shadow-red-500/40
-        active:bg-red-500 dark:active:bg-red-500`;
+        active:bg-red-500 dark:active:bg-red-500
+        cursor-default`;
     }
 
-    // Unselected options - visible but secondary
     return `${baseStyles}
       border-primary/30 dark:border-primary/30
       bg-background dark:bg-background
       text-foreground/70 dark:text-foreground/70
       hover:text-foreground/90 dark:hover:text-foreground/90
-      active:text-foreground/90 dark:active:text-foreground/90`;
+      active:text-foreground/90 dark:active:text-foreground/90
+      cursor-default`;
   };
 
   const getIconStyles = (option: ContentItem) => {
@@ -151,11 +149,13 @@ export const GameScreen: React.FC<GameScreenProps> = ({
             {options.map((option, index) => (
               <Button
                 key={index}
-                onClick={() => handleAnswer(option)}
+                onClick={(e) => {
+                  (e.currentTarget as HTMLButtonElement).blur();
+                  handleAnswer(option);
+                }}
                 className={getOptionStyles(option)}
                 variant="outline"
                 disabled={!!feedback}
-                style={{ WebkitTapHighlightColor: "transparent" }}
               >
                 <span className="flex items-center justify-between w-full">
                   <span className="font-bold">{option.meaning}</span>
@@ -172,13 +172,10 @@ export const GameScreen: React.FC<GameScreenProps> = ({
             ))}
           </div>
 
-          {/* Reserve space for the continue button */}
           <div className="h-[44px] relative">
-            {" "}
-            {/* 44px matches the default Button height */}
             <Button
               onClick={handleNextQuestion}
-              className={`w-full bg-primary hover:bg-primary/90 transition-all duration-300
+              className={`w-full bg-primary transition-all duration-300
                 absolute top-0 left-0 right-0
                 ${
                   canProceed

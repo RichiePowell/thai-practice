@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useCallback, useState } from "react";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -30,8 +28,9 @@ export const ThaiPhraseGame = ({ initialSettings }: ThaiPhraseGameProps) => {
   const [settings, setSettings] = useState<GameSettings>(initialSettings);
   const [finalScore, setFinalScore] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
-  const [selectedCategory, setSelectedCategory] =
-    useState<LearningCategory | null>(null);
+  const [selectedCategories, setSelectedCategories] = useState<
+    LearningCategory[]
+  >([]);
   const { playSound } = useAudio();
 
   const handleGameOver = useCallback(
@@ -61,6 +60,7 @@ export const ThaiPhraseGame = ({ initialSettings }: ThaiPhraseGameProps) => {
   const handleReturnToMenu = () => {
     setGameState("menu");
     setWrongAnswers([]);
+    setSelectedCategories([]);
   };
 
   const HomeButton = () => (
@@ -94,17 +94,17 @@ export const ThaiPhraseGame = ({ initialSettings }: ThaiPhraseGameProps) => {
 
         {gameState === "category-select" && (
           <CategorySelector
-            onSelect={(category) => {
-              setSelectedCategory(category);
+            onSelectCategories={(categories) => {
+              setSelectedCategories(categories);
               setGameState("playing");
             }}
           />
         )}
 
-        {gameState === "playing" && selectedCategory && (
+        {gameState === "playing" && selectedCategories.length > 0 && (
           <GameScreen
             settings={settings}
-            category={selectedCategory}
+            categories={selectedCategories}
             onGameOver={handleGameOver}
             onReturnToMenu={handleReturnToMenu}
           />
@@ -163,7 +163,14 @@ export const ThaiPhraseGame = ({ initialSettings }: ThaiPhraseGameProps) => {
                 className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground"
               >
                 <RefreshCw className="w-4 h-4" />
-                Play Again
+                Play Again with Same Categories
+              </Button>
+              <Button
+                onClick={() => setGameState("category-select")}
+                variant="outline"
+                className="w-full border-2 hover:bg-accent/10 dark:border-primary/30 dark:hover:border-primary dark:hover:bg-primary/10 dark:hover:text-white"
+              >
+                Choose Different Categories
               </Button>
               <Button
                 onClick={handleReturnToMenu}
@@ -179,3 +186,5 @@ export const ThaiPhraseGame = ({ initialSettings }: ThaiPhraseGameProps) => {
     </Card>
   );
 };
+
+export default ThaiPhraseGame;

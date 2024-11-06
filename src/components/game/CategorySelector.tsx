@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -22,10 +20,12 @@ import {
   SortAsc,
   Filter,
   Type,
+  Check,
 } from "lucide-react";
 import type { LearningCategory } from "@/types/LearningCategory";
 import { LEARNING_CATEGORIES } from "@/constants/categories";
 import { getCategoryItemCount } from "@/constants/content";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const iconMap = {
   GraduationCap,
@@ -49,7 +49,7 @@ type Difficulty = "all" | "beginner" | "intermediate" | "advanced";
 type SortOption = "default" | "alphabetical" | "items";
 
 interface CategorySelectorProps {
-  onSelect: (category: LearningCategory) => void;
+  onSelectCategories: (categories: LearningCategory[]) => void;
 }
 
 const difficultyColors = {
@@ -62,10 +62,13 @@ const difficultyColors = {
 };
 
 export const CategorySelector: React.FC<CategorySelectorProps> = ({
-  onSelect,
+  onSelectCategories,
 }) => {
   const [difficulty, setDifficulty] = useState<Difficulty>("all");
   const [sortOption, setSortOption] = useState<SortOption>("default");
+  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(
+    new Set()
+  );
 
   const filteredAndSortedCategories = useMemo(() => {
     let categories = [...LEARNING_CATEGORIES];
@@ -90,6 +93,25 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
     }
   }, [difficulty, sortOption]);
 
+  const handleCategoryClick = (category: LearningCategory) => {
+    setSelectedCategories((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(category.id)) {
+        newSet.delete(category.id);
+      } else {
+        newSet.add(category.id);
+      }
+      return newSet;
+    });
+  };
+
+  const handleStartLearning = () => {
+    const selectedCategoryObjects = LEARNING_CATEGORIES.filter((category) =>
+      selectedCategories.has(category.id)
+    );
+    onSelectCategories(selectedCategoryObjects);
+  };
+
   if (LEARNING_CATEGORIES.length === 0) {
     return (
       <div className="text-center p-8">
@@ -105,10 +127,10 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-2xl font-bold text-primary mb-2">
-          Choose a Category
+          Choose Categories
         </h2>
         <p className="text-muted-foreground">
-          Select what you&apos;d like to learn today
+          Select one or more categories to learn from
         </p>
       </div>
 
@@ -180,22 +202,41 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
         {filteredAndSortedCategories.map((category) => {
           const Icon = iconMap[category.icon as keyof typeof iconMap];
           const itemCount = getCategoryItemCount(category.id);
+          const isSelected = selectedCategories.has(category.id);
 
           return (
             <Card
               key={category.id}
-              className="p-4 cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border hover:border-primary bg-card"
-              onClick={() => onSelect(category)}
+              className={`p-4 cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border ${
+                isSelected
+                  ? "border-primary ring-2 ring-primary/20"
+                  : "border-border"
+              }`}
+              onClick={() => handleCategoryClick(category)}
             >
               <div className="flex items-start gap-4">
-                <div className="rounded-lg bg-primary/10 p-2">
-                  {Icon && <Icon className="w-6 h-6 text-primary" />}
+                <div
+                  className={`rounded-lg p-2 ${
+                    isSelected
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-primary/10"
+                  }`}
+                >
+                  {Icon && (
+                    <Icon
+                      className={`w-6 h-6 ${
+                        isSelected ? "text-primary-foreground" : "text-primary"
+                      }`}
+                    />
+                  )}
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-semibold text-lg text-foreground">
-                      {category.title}
-                    </h3>
+                    <div className="flex items-center gap-1.5">
+                      <h3 className="font-semibold text-lg text-foreground">
+                        {category.title}
+                      </h3>
+                    </div>
                     <Badge
                       variant="secondary"
                       className={difficultyColors[category.difficulty]}
@@ -206,8 +247,11 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
                   <p className="text-sm text-muted-foreground mb-2">
                     {category.description}
                   </p>
-                  <div className="text-xs text-muted-foreground/80">
-                    {itemCount} items
+                  <div className="text-xs text-muted-foreground/80 flex">
+                    <div>{itemCount} items</div>
+                    {isSelected && (
+                      <Check className="w-4 h-4 text-primary inline-block ml-auto" />
+                    )}
                   </div>
                 </div>
               </div>
@@ -215,6 +259,34 @@ export const CategorySelector: React.FC<CategorySelectorProps> = ({
           );
         })}
       </div>
+
+      {/* Sticky button container */}
+      <div className="fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-sm border-t border-border transition-all duration-300">
+        <div className="container max-w-2xl mx-auto p-4">
+          {selectedCategories.size > 0 ? (
+            <Button
+              size="lg"
+              className="w-full bg-primary hover:bg-primary/90"
+              onClick={() =>
+                onSelectCategories(
+                  LEARNING_CATEGORIES.filter((category) =>
+                    selectedCategories.has(category.id)
+                  )
+                )
+              }
+            >
+              Start Game ({selectedCategories.size}{" "}
+              {selectedCategories.size === 1 ? "category" : "categories"})
+            </Button>
+          ) : (
+            <p className="text-center text-muted-foreground py-2">
+              Select at least one category to begin practicing
+            </p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
+
+export default CategorySelector;

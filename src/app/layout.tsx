@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ThemeScript />
         <ThemeProvider>
           <AudioProvider>
-            <div className="relative">
+            <div className="relative mb-20">
               <ThemeToggle />
               <AudioToggle />
               {children}

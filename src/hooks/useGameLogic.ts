@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useRef, useEffect, useCallback } from "react";
 import type { LearningCategory } from "@/types/LearningCategory";
 import type { FeedbackType } from "@/types/FeedbackType";
@@ -13,15 +11,17 @@ import { WrongAnswer } from "@/types/WrongAnswerType";
 interface UseGameLogicParams {
   settings: GameSettings;
   onGameOver: (score: number, wrongAnswers: WrongAnswer[]) => void;
-  category: LearningCategory;
+  categories: LearningCategory[]; // Changed from single category to array
 }
 
 const useGameLogic = ({
   settings = DEFAULT_SETTINGS,
   onGameOver,
-  category,
+  categories,
 }: UseGameLogicParams) => {
   const [currentItem, setCurrentItem] = useState<ContentItem | null>(null);
+  const [currentCategory, setCurrentCategory] =
+    useState<LearningCategory | null>(null);
   const [options, setOptions] = useState<ContentItem[]>([]);
   const [score, setScore] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
@@ -31,28 +31,44 @@ const useGameLogic = ({
   );
   const [canProceed, setCanProceed] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const categoryContentRef = useRef(CATEGORY_CONTENT[category.id]);
   const { playSound } = useAudio();
   const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
 
+  // Combined items from all selected categories
+  const allItemsRef = useRef<ContentItem[]>([]);
   const [questionSet, setQuestionSet] = useState<ContentItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const lastQuestionRef = useRef<string | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
 
+  // Initialize combined items from all categories
+  useEffect(() => {
+    const items: ContentItem[] = [];
+    const categoryContentMap = new Map<string, ContentItem[]>();
+
+    categories.forEach((category) => {
+      const content = CATEGORY_CONTENT[category.id];
+      if (content) {
+        categoryContentMap.set(category.id, content.items);
+        items.push(...content.items);
+      }
+    });
+
+    allItemsRef.current = items;
+    setIsInitialized(true);
+  }, [categories]);
+
   const generateNewSet = useCallback(() => {
-    const categoryContent = categoryContentRef.current;
-    if (!categoryContent) return [];
+    if (allItemsRef.current.length === 0) return [];
 
-    const allItems = [...categoryContent.items];
+    // Shuffle all items
+    const shuffledItems = [...allItemsRef.current].sort(
+      () => Math.random() - 0.5
+    );
 
-    // Shuffle all items to randomize order
-    const shuffledItems = allItems.sort(() => Math.random() - 0.5);
-
-    // Ensure no consecutive duplicates in the initial set
+    // Ensure no consecutive duplicates
     for (let i = 1; i < shuffledItems.length; i++) {
       if (shuffledItems[i].id === shuffledItems[i - 1].id) {
-        // Swap with a non-duplicate item
         const swapIndex = (i + 1) % shuffledItems.length;
         [shuffledItems[i], shuffledItems[swapIndex]] = [
           shuffledItems[swapIndex],
@@ -64,12 +80,32 @@ const useGameLogic = ({
     return shuffledItems;
   }, []);
 
+  const findCategoryForItem = useCallback(
+    (item: ContentItem): LearningCategory | null => {
+      for (const category of categories) {
+        const categoryContent = CATEGORY_CONTENT[category.id];
+        if (
+          categoryContent &&
+          categoryContent.items.some((i) => i.id === item.id)
+        ) {
+          return category;
+        }
+      }
+      return null;
+    },
+    [categories]
+  );
+
   const setupQuestion = useCallback(
     (correct: ContentItem) => {
-      const categoryContent = categoryContentRef.current;
-      if (!categoryContent || !isInitialized) return; // Add initialization check
+      if (!isInitialized || allItemsRef.current.length === 0) return;
 
-      const wrongOptions = categoryContent.items
+      // Find which category this item belongs to
+      const category = findCategoryForItem(correct);
+      setCurrentCategory(category);
+
+      // Get wrong options from all available items
+      const wrongOptions = allItemsRef.current
         .filter((item) => item.id !== correct.id)
         .sort(() => Math.random() - 0.5)
         .slice(0, 3);
@@ -87,11 +123,16 @@ const useGameLogic = ({
         setTimeLeft(settings.timerDuration);
       }
     },
-    [settings.timerDuration, settings.timerEnabled, isInitialized]
+    [
+      settings.timerDuration,
+      settings.timerEnabled,
+      isInitialized,
+      findCategoryForItem,
+    ]
   );
 
   const generateQuestion = useCallback(() => {
-    if (!isInitialized) return; // Add initialization check
+    if (!isInitialized) return;
 
     if (currentIndex >= questionSet.length || questionSet.length === 0) {
       const newSet = generateNewSet();
@@ -207,38 +248,35 @@ const useGameLogic = ({
     wrongAnswers,
   ]);
 
+  // Initial setup
   useEffect(() => {
     const initialSet = generateNewSet();
 
-    // Set up initial question directly without using setupQuestion
     if (initialSet.length > 0) {
       const firstQuestion = initialSet[0];
-      const categoryContent = categoryContentRef.current;
+      const category = findCategoryForItem(firstQuestion);
 
-      if (categoryContent) {
-        const wrongOptions = categoryContent.items
-          .filter((item) => item.id !== firstQuestion.id)
-          .sort(() => Math.random() - 0.5)
-          .slice(0, 3);
+      const wrongOptions = allItemsRef.current
+        .filter((item) => item.id !== firstQuestion.id)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3);
 
-        const allOptions = [...wrongOptions, firstQuestion].sort(
-          () => Math.random() - 0.5
-        );
+      const allOptions = [...wrongOptions, firstQuestion].sort(
+        () => Math.random() - 0.5
+      );
 
-        // Set all initial state synchronously
-        setQuestionSet(initialSet);
-        setCurrentIndex(0);
-        setCurrentItem(firstQuestion);
-        setOptions(allOptions);
-        lastQuestionRef.current = firstQuestion.id;
+      setQuestionSet(initialSet);
+      setCurrentIndex(0);
+      setCurrentItem(firstQuestion);
+      setCurrentCategory(category);
+      setOptions(allOptions);
+      lastQuestionRef.current = firstQuestion.id;
 
-        if (settings.timerEnabled) {
-          setTimeLeft(settings.timerDuration);
-        }
+      if (settings.timerEnabled) {
+        setTimeLeft(settings.timerDuration);
       }
     }
 
-    // Mark as initialized only after everything is set up
     setIsInitialized(true);
 
     return () => {
@@ -246,8 +284,14 @@ const useGameLogic = ({
         clearTimeout(timerRef.current);
       }
     };
-  }, []);
+  }, [
+    settings.timerEnabled,
+    settings.timerDuration,
+    generateNewSet,
+    findCategoryForItem,
+  ]);
 
+  // Timer logic
   useEffect(() => {
     if (settings.timerEnabled && timeLeft > 0 && !feedback) {
       timerRef.current = setTimeout(() => {
@@ -266,6 +310,7 @@ const useGameLogic = ({
 
   return {
     currentItem,
+    currentCategory,
     options,
     score,
     totalQuestions,
