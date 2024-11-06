@@ -4,8 +4,11 @@ import React, { useEffect } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
 import type { GameSettings } from "@/types/GameSettings";
 import { GAME_CONFIG } from "@/constants/config";
+import { DEFAULT_SETTINGS } from "@/constants/settings";
 import { saveStoredSettings } from "@/lib/storage";
 
 interface SettingsPanelProps {
@@ -21,6 +24,10 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
   useEffect(() => {
     saveStoredSettings({ game: settings });
   }, [settings]);
+
+  const handleResetSettings = () => {
+    onSettingsChange({ ...DEFAULT_SETTINGS });
+  };
 
   return (
     <div className="space-y-6">
@@ -96,6 +103,17 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
         <div className="text-right text-sm text-muted-foreground">
           {settings.questionsPerRound} questions
         </div>
+      </div>
+
+      <div className="border-t pt-4">
+        <Button
+          variant="outline"
+          onClick={handleResetSettings}
+          className="w-full border-dashed"
+        >
+          <RefreshCw className="mr-2 h-4 w-4" />
+          Reset to default settings
+        </Button>
       </div>
     </div>
   );
