@@ -4,7 +4,6 @@ const questionWords: PhraseContent[] = [
   // Who
   {
     id: "who-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ใคร",
     romanized: "khrai",
@@ -12,7 +11,6 @@ const questionWords: PhraseContent[] = [
   },
   {
     id: "who-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ของใคร",
     romanized: "khɔ̌ɔng-khrai",
@@ -22,7 +20,6 @@ const questionWords: PhraseContent[] = [
   // What
   {
     id: "what-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "อะไร",
     romanized: "à-rai",
@@ -30,7 +27,6 @@ const questionWords: PhraseContent[] = [
   },
   {
     id: "what-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ทำอะไร",
     romanized: "tham-à-rai",
@@ -40,7 +36,6 @@ const questionWords: PhraseContent[] = [
   // Where
   {
     id: "where-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ที่ไหน",
     romanized: "thîi-nǎi",
@@ -48,7 +43,6 @@ const questionWords: PhraseContent[] = [
   },
   {
     id: "where-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ไปไหน",
     romanized: "bpai-nǎi",
@@ -58,7 +52,6 @@ const questionWords: PhraseContent[] = [
   // When
   {
     id: "when-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เมื่อไหร่",
     romanized: "mʉ̂a-rài",
@@ -66,7 +59,6 @@ const questionWords: PhraseContent[] = [
   },
   {
     id: "when-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "กี่โมง",
     romanized: "gìi-moong",
@@ -76,7 +68,6 @@ const questionWords: PhraseContent[] = [
   // Why
   {
     id: "why-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ทำไม",
     romanized: "tham-mai",
@@ -84,7 +75,6 @@ const questionWords: PhraseContent[] = [
   },
   {
     id: "why-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เพราะอะไร",
     romanized: "prɔ́-à-rai",
@@ -94,7 +84,6 @@ const questionWords: PhraseContent[] = [
   // How
   {
     id: "how-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "อย่างไร",
     romanized: "yàang-rai",
@@ -102,7 +91,6 @@ const questionWords: PhraseContent[] = [
   },
   {
     id: "how-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เท่าไหร่",
     romanized: "thâo-rài",
@@ -112,7 +100,6 @@ const questionWords: PhraseContent[] = [
   // Common Question Particle
   {
     id: "particle-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ไหม",
     romanized: "mǎi",
@@ -120,7 +107,6 @@ const questionWords: PhraseContent[] = [
   },
   {
     id: "particle-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "หรือ",
     romanized: "rʉ̌ʉ",

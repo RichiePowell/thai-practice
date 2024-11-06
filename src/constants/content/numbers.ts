@@ -3,7 +3,6 @@ import type { CategoryContent, PhraseContent } from "@/types/ContentTypes";
 const numbers: PhraseContent[] = [
   {
     id: "number-0",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ศูนย์",
     romanized: "song",
@@ -11,7 +10,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "หนึ่ง",
     romanized: "neung",
@@ -19,7 +17,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "สอง",
     romanized: "song",
@@ -27,7 +24,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-3",
-    type: "phrase",
     difficulty: "beginner",
     thai: "สาม",
     romanized: "saam",
@@ -35,7 +31,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-4",
-    type: "phrase",
     difficulty: "beginner",
     thai: "สี่",
     romanized: "see",
@@ -43,7 +38,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-5",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ห้า",
     romanized: "haa",
@@ -51,7 +45,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-6",
-    type: "phrase",
     difficulty: "beginner",
     thai: "หก",
     romanized: "hok",
@@ -59,7 +52,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-7",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เจ็ด",
     romanized: "jet",
@@ -67,7 +59,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-8",
-    type: "phrase",
     difficulty: "beginner",
     thai: "แปด",
     romanized: "paet",
@@ -75,7 +66,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-9",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เก้า",
     romanized: "kao",
@@ -83,7 +73,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-10",
-    type: "phrase",
     difficulty: "beginner",
     thai: "สิบ",
     romanized: "sip",
@@ -91,7 +80,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-11",
-    type: "phrase",
     difficulty: "beginner",
     thai: "สิบเอ็ด",
     romanized: "sip-et",
@@ -99,7 +87,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-12",
-    type: "phrase",
     difficulty: "beginner",
     thai: "สิบสอง",
     romanized: "sip-song",
@@ -107,7 +94,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-13",
-    type: "phrase",
     difficulty: "beginner",
     thai: "สิบสาม",
     romanized: "sip-saam",
@@ -115,7 +101,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-14",
-    type: "phrase",
     difficulty: "beginner",
     thai: "สิบสี่",
     romanized: "sip-see",
@@ -123,7 +108,6 @@ const numbers: PhraseContent[] = [
   },
   {
     id: "number-15",
-    type: "phrase",
     difficulty: "beginner",
     thai: "สิบห้า",
     romanized: "sip-haa",

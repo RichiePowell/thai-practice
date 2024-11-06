@@ -3,7 +3,6 @@ import type { CategoryContent, PhraseContent } from "@/types/ContentTypes";
 const classifiers: PhraseContent[] = [
   {
     id: "classifier-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "คน",
     romanized: "khon",
@@ -11,7 +10,6 @@ const classifiers: PhraseContent[] = [
   },
   {
     id: "classifier-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ตัว",
     romanized: "tua",
@@ -19,7 +17,6 @@ const classifiers: PhraseContent[] = [
   },
   {
     id: "classifier-3",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ลูก",
     romanized: "lûuk",
@@ -27,7 +24,6 @@ const classifiers: PhraseContent[] = [
   },
   {
     id: "classifier-4",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ชิ้น",
     romanized: "chín",
@@ -35,7 +31,6 @@ const classifiers: PhraseContent[] = [
   },
   {
     id: "classifier-5",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ห้อง",
     romanized: "hǒng",
@@ -43,7 +38,6 @@ const classifiers: PhraseContent[] = [
   },
   {
     id: "classifier-6",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เล่ม",
     romanized: "lêm",
@@ -51,7 +45,6 @@ const classifiers: PhraseContent[] = [
   },
   {
     id: "classifier-7",
-    type: "phrase",
     difficulty: "beginner",
     thai: "คัน",
     romanized: "khan",
@@ -59,7 +52,6 @@ const classifiers: PhraseContent[] = [
   },
   {
     id: "classifier-8",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ดอก",
     romanized: "dòk",
@@ -67,7 +59,6 @@ const classifiers: PhraseContent[] = [
   },
   {
     id: "classifier-9",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ใบ",
     romanized: "bai",
@@ -75,7 +66,6 @@ const classifiers: PhraseContent[] = [
   },
   {
     id: "classifier-10",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ด้าม",
     romanized: "dâam",

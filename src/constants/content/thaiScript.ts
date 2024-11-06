@@ -5,7 +5,6 @@ import type { CategoryContent, PhraseContent } from "@/types/ContentTypes";
 const consonants: PhraseContent[] = [
   {
     id: "consonant-k",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ก",
     romanized: "gɔɔ-gài",
@@ -19,7 +18,6 @@ const consonants: PhraseContent[] = [
   },
   {
     id: "consonant-n",
-    type: "phrase",
     difficulty: "beginner",
     thai: "น",
     romanized: "nɔɔ-nuu",
@@ -33,7 +31,6 @@ const consonants: PhraseContent[] = [
   },
   {
     id: "consonant-m",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ม",
     romanized: "mɔɔ-mǎa",
@@ -51,7 +48,6 @@ const consonants: PhraseContent[] = [
 const vowels: PhraseContent[] = [
   {
     id: "vowel-a-short",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ะ",
     romanized: "sara a",
@@ -64,7 +60,6 @@ const vowels: PhraseContent[] = [
   },
   {
     id: "vowel-a-long",
-    type: "phrase",
     difficulty: "beginner",
     thai: "า",
     romanized: "sara aa",
@@ -77,7 +72,6 @@ const vowels: PhraseContent[] = [
   },
   {
     id: "vowel-i",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ิ",
     romanized: "sara i",
@@ -94,7 +88,6 @@ const vowels: PhraseContent[] = [
 const simpleTones: PhraseContent[] = [
   {
     id: "tone-low",
-    type: "phrase",
     difficulty: "beginner",
     thai: "่",
     romanized: "mai eek",

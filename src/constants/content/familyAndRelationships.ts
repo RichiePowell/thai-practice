@@ -4,7 +4,6 @@ const familyAndRelationships: PhraseContent[] = [
   // Core Family Terms
   {
     id: "family-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "พ่อ",
     romanized: "phɔ̂ɔ",
@@ -12,7 +11,6 @@ const familyAndRelationships: PhraseContent[] = [
   },
   {
     id: "family-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "แม่",
     romanized: "mɛ̂ɛ",
@@ -20,7 +18,6 @@ const familyAndRelationships: PhraseContent[] = [
   },
   {
     id: "family-3",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ลูกชาย",
     romanized: "lûuk-chaai",
@@ -28,7 +25,6 @@ const familyAndRelationships: PhraseContent[] = [
   },
   {
     id: "family-4",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ลูกสาว",
     romanized: "lûuk-sǎao",
@@ -38,7 +34,6 @@ const familyAndRelationships: PhraseContent[] = [
   // Siblings
   {
     id: "family-5",
-    type: "phrase",
     difficulty: "beginner",
     thai: "พี่ชาย",
     romanized: "phîi-chaai",
@@ -46,7 +41,6 @@ const familyAndRelationships: PhraseContent[] = [
   },
   {
     id: "family-6",
-    type: "phrase",
     difficulty: "beginner",
     thai: "พี่สาว",
     romanized: "phîi-sǎao",
@@ -54,7 +48,6 @@ const familyAndRelationships: PhraseContent[] = [
   },
   {
     id: "family-7",
-    type: "phrase",
     difficulty: "beginner",
     thai: "น้องชาย",
     romanized: "nɔ́ɔng-chaai",
@@ -62,7 +55,6 @@ const familyAndRelationships: PhraseContent[] = [
   },
   {
     id: "family-8",
-    type: "phrase",
     difficulty: "beginner",
     thai: "น้องสาว",
     romanized: "nɔ́ɔng-sǎao",
@@ -72,7 +64,6 @@ const familyAndRelationships: PhraseContent[] = [
   // Marriage Relations
   {
     id: "family-9",
-    type: "phrase",
     difficulty: "beginner",
     thai: "สามี",
     romanized: "sǎa-mii",
@@ -80,7 +71,6 @@ const familyAndRelationships: PhraseContent[] = [
   },
   {
     id: "family-10",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ภรรยา",
     romanized: "phan-ra-yaa",
@@ -88,7 +78,6 @@ const familyAndRelationships: PhraseContent[] = [
   },
   {
     id: "family-11",
-    type: "phrase",
     difficulty: "beginner",
     thai: "แฟน",
     romanized: "fɛɛn",
@@ -98,7 +87,6 @@ const familyAndRelationships: PhraseContent[] = [
   // Basic Social Relationships
   {
     id: "relation-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เพื่อน",
     romanized: "phûean",
@@ -106,7 +94,6 @@ const familyAndRelationships: PhraseContent[] = [
   },
   {
     id: "relation-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เพื่อนร่วมงาน",
     romanized: "phûean-rûam-ngaan",
@@ -116,7 +103,6 @@ const familyAndRelationships: PhraseContent[] = [
   // Essential Respectful Terms
   {
     id: "respect-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "พี่",
     romanized: "phîi",
@@ -124,7 +110,6 @@ const familyAndRelationships: PhraseContent[] = [
   },
   {
     id: "respect-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "น้อง",
     romanized: "nɔ́ɔng",
@@ -134,7 +119,6 @@ const familyAndRelationships: PhraseContent[] = [
   // Basic Questions
   {
     id: "relation-q-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "มีพี่น้องไหม",
     romanized: "mii-phîi-nɔ́ɔng-mǎi",
@@ -142,7 +126,6 @@ const familyAndRelationships: PhraseContent[] = [
   },
   {
     id: "relation-q-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "แต่งงานหรือยัง",
     romanized: "tɛ̀ɛng-ngaan-rʉ̌ʉ-yang",

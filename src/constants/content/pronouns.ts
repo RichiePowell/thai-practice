@@ -3,7 +3,6 @@ import type { CategoryContent, PhraseContent } from "@/types/ContentTypes";
 const pronouns: PhraseContent[] = [
   {
     id: "pronoun-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ฉัน",
     romanized: "chan",
@@ -11,7 +10,6 @@ const pronouns: PhraseContent[] = [
   },
   {
     id: "pronoun-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ผม",
     romanized: "phom",
@@ -19,7 +17,6 @@ const pronouns: PhraseContent[] = [
   },
   {
     id: "pronoun-3",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ดิฉัน",
     romanized: "di-chan",
@@ -27,7 +24,6 @@ const pronouns: PhraseContent[] = [
   },
   {
     id: "pronoun-4",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เขา",
     romanized: "khao",
@@ -35,7 +31,6 @@ const pronouns: PhraseContent[] = [
   },
   {
     id: "pronoun-5",
-    type: "phrase",
     difficulty: "beginner",
     thai: "พวกเรา",
     romanized: "phuak-rao",
@@ -43,7 +38,6 @@ const pronouns: PhraseContent[] = [
   },
   {
     id: "pronoun-6",
-    type: "phrase",
     difficulty: "beginner",
     thai: "พวกคุณ",
     romanized: "phuak-khun",
@@ -51,7 +45,6 @@ const pronouns: PhraseContent[] = [
   },
   {
     id: "pronoun-7",
-    type: "phrase",
     difficulty: "beginner",
     thai: "คุณ",
     romanized: "khun",
@@ -59,7 +52,6 @@ const pronouns: PhraseContent[] = [
   },
   {
     id: "pronoun-8",
-    type: "phrase",
     difficulty: "beginner",
     thai: "พวกเขา",
     romanized: "phuak-khao",

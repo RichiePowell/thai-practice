@@ -4,7 +4,6 @@ const timeAndCalendar: PhraseContent[] = [
   // Days of the Week
   {
     id: "day-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "วันจันทร์",
     romanized: "wan-jan",
@@ -12,7 +11,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "day-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "วันอังคาร",
     romanized: "wan-ang-khan",
@@ -20,7 +18,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "day-3",
-    type: "phrase",
     difficulty: "beginner",
     thai: "วันพุธ",
     romanized: "wan-phut",
@@ -28,7 +25,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "day-4",
-    type: "phrase",
     difficulty: "beginner",
     thai: "วันพฤหัสบดี",
     romanized: "wan-pha-rue-hat-sa-ba-dee",
@@ -36,7 +32,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "day-5",
-    type: "phrase",
     difficulty: "beginner",
     thai: "วันศุกร์",
     romanized: "wan-suk",
@@ -44,7 +39,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "day-6",
-    type: "phrase",
     difficulty: "beginner",
     thai: "วันเสาร์",
     romanized: "wan-sao",
@@ -52,7 +46,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "day-7",
-    type: "phrase",
     difficulty: "beginner",
     thai: "วันอาทิตย์",
     romanized: "wan-aa-thit",
@@ -62,7 +55,6 @@ const timeAndCalendar: PhraseContent[] = [
   // Months
   {
     id: "month-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "มกราคม",
     romanized: "ma-ka-ra-khom",
@@ -70,7 +62,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "month-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "กุมภาพันธ์",
     romanized: "kum-pha-phan",
@@ -78,7 +69,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "month-3",
-    type: "phrase",
     difficulty: "beginner",
     thai: "มีนาคม",
     romanized: "mee-na-khom",
@@ -88,7 +78,6 @@ const timeAndCalendar: PhraseContent[] = [
   // Time-related Words
   {
     id: "time-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "นาฬิกา",
     romanized: "na-li-ka",
@@ -96,7 +85,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "time-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "นาที",
     romanized: "na-thee",
@@ -104,7 +92,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "time-3",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ชั่วโมง",
     romanized: "chua-mong",
@@ -114,7 +101,6 @@ const timeAndCalendar: PhraseContent[] = [
   // Time Expressions
   {
     id: "time-exp-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เมื่อวาน",
     romanized: "muea-waan",
@@ -122,7 +108,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "time-exp-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "วันนี้",
     romanized: "wan-nee",
@@ -130,7 +115,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "time-exp-3",
-    type: "phrase",
     difficulty: "beginner",
     thai: "พรุ่งนี้",
     romanized: "phrung-nee",
@@ -138,7 +122,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "time-exp-4",
-    type: "phrase",
     difficulty: "intermediate",
     thai: "สัปดาห์หน้า",
     romanized: "sap-da-na",
@@ -146,7 +129,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "time-exp-5",
-    type: "phrase",
     difficulty: "intermediate",
     thai: "เดือนที่แล้ว",
     romanized: "duean-thi-laew",
@@ -156,7 +138,6 @@ const timeAndCalendar: PhraseContent[] = [
   // Common Time Questions
   {
     id: "time-q-1",
-    type: "phrase",
     difficulty: "intermediate",
     thai: "กี่โมงแล้ว",
     romanized: "kee-mong-laew",
@@ -164,7 +145,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "time-q-2",
-    type: "phrase",
     difficulty: "intermediate",
     thai: "วันไหน",
     romanized: "wan-nai",
@@ -174,7 +154,6 @@ const timeAndCalendar: PhraseContent[] = [
   // Parts of Day
   {
     id: "day-part-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เช้า",
     romanized: "chao",
@@ -182,7 +161,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "day-part-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "บ่าย",
     romanized: "baai",
@@ -190,7 +168,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "day-part-3",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เย็น",
     romanized: "yen",
@@ -198,7 +175,6 @@ const timeAndCalendar: PhraseContent[] = [
   },
   {
     id: "day-part-4",
-    type: "phrase",
     difficulty: "beginner",
     thai: "กลางคืน",
     romanized: "klaang-khuen",

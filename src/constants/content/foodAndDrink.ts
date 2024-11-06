@@ -3,7 +3,6 @@ import type { CategoryContent, PhraseContent } from "@/types/ContentTypes";
 const foodAndDrink: PhraseContent[] = [
   {
     id: "food-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ข้าว",
     romanized: "khao",
@@ -11,7 +10,6 @@ const foodAndDrink: PhraseContent[] = [
   },
   {
     id: "food-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ผัก",
     romanized: "phak",
@@ -19,7 +17,6 @@ const foodAndDrink: PhraseContent[] = [
   },
   {
     id: "food-3",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เนื้อ",
     romanized: "neuua",
@@ -27,7 +24,6 @@ const foodAndDrink: PhraseContent[] = [
   },
   {
     id: "food-4",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ปลา",
     romanized: "bplaa",
@@ -35,7 +31,6 @@ const foodAndDrink: PhraseContent[] = [
   },
   {
     id: "food-5",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ผลไม้",
     romanized: "phon-ma-i",
@@ -43,7 +38,6 @@ const foodAndDrink: PhraseContent[] = [
   },
   {
     id: "drink-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "น้ำ",
     romanized: "naam",
@@ -51,7 +45,6 @@ const foodAndDrink: PhraseContent[] = [
   },
   {
     id: "drink-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "กาแฟ",
     romanized: "gaa-fae",
@@ -59,7 +52,6 @@ const foodAndDrink: PhraseContent[] = [
   },
   {
     id: "drink-3",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ชา",
     romanized: "chaa",
@@ -67,7 +59,6 @@ const foodAndDrink: PhraseContent[] = [
   },
   {
     id: "drink-4",
-    type: "phrase",
     difficulty: "beginner",
     thai: "น้ำผลไม้",
     romanized: "naam-phon-ma-i",
@@ -75,11 +66,17 @@ const foodAndDrink: PhraseContent[] = [
   },
   {
     id: "drink-5",
-    type: "phrase",
     difficulty: "beginner",
     thai: "นม",
     romanized: "nom",
     meaning: "milk",
+  },
+  {
+    id: "taste-1",
+    difficulty: "beginner",
+    thai: "เผ็ด",
+    romanized: "phet",
+    meaning: "spicy",
   },
 ];
 

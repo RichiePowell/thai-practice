@@ -21,6 +21,7 @@ import {
   HelpCircle,
   SortAsc,
   Filter,
+  Type,
 } from "lucide-react";
 import type { LearningCategory } from "@/types/LearningCategory";
 import { LEARNING_CATEGORIES } from "@/constants/categories";
@@ -41,6 +42,7 @@ const iconMap = {
   Users2,
   Palette,
   HelpCircle,
+  Type,
 } as const;
 
 type Difficulty = "all" | "beginner" | "intermediate" | "advanced";

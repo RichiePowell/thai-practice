@@ -3,7 +3,6 @@ import type { LearningCategoryId } from "./LearningCategory";
 export interface BaseContent {
   id: string;
   difficulty: "beginner" | "intermediate" | "advanced";
-  type: "phrase";
   thai: string;
   romanized: string;
   meaning: string;

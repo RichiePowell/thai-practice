@@ -5,7 +5,6 @@ import type { CategoryContent, PhraseContent } from "@/types/ContentTypes";
 const rareConsonants: PhraseContent[] = [
   {
     id: "consonant-zh",
-    type: "phrase",
     difficulty: "advanced",
     thai: "ฌ",
     romanized: "chɔɔ-chəə",
@@ -19,7 +18,6 @@ const rareConsonants: PhraseContent[] = [
   },
   {
     id: "consonant-dt",
-    type: "phrase",
     difficulty: "advanced",
     thai: "ฎ",
     romanized: "dɔɔ-chá-daa",
@@ -33,7 +31,6 @@ const rareConsonants: PhraseContent[] = [
   },
   {
     id: "consonant-th",
-    type: "phrase",
     difficulty: "advanced",
     thai: "ฐ",
     romanized: "thɔɔ-thǎan",
@@ -51,7 +48,6 @@ const rareConsonants: PhraseContent[] = [
 const complexVowels: PhraseContent[] = [
   {
     id: "vowel-oe-short",
-    type: "phrase",
     difficulty: "advanced",
     thai: "เ-ิ",
     romanized: "sara oe",
@@ -64,7 +60,6 @@ const complexVowels: PhraseContent[] = [
   },
   {
     id: "vowel-ia-short",
-    type: "phrase",
     difficulty: "advanced",
     thai: "เ-ียะ",
     romanized: "sara ia",
@@ -77,7 +72,6 @@ const complexVowels: PhraseContent[] = [
   },
   {
     id: "vowel-oe-complex",
-    type: "phrase",
     difficulty: "advanced",
     thai: "เ-็อ",
     romanized: "sara oe",
@@ -94,7 +88,6 @@ const complexVowels: PhraseContent[] = [
 const sanskritChars: PhraseContent[] = [
   {
     id: "sanskrit-ru",
-    type: "phrase",
     difficulty: "advanced",
     thai: "ฤ",
     romanized: "rɯ",
@@ -107,7 +100,6 @@ const sanskritChars: PhraseContent[] = [
   },
   {
     id: "sanskrit-lu",
-    type: "phrase",
     difficulty: "advanced",
     thai: "ฦ",
     romanized: "lɯ",
@@ -120,7 +112,6 @@ const sanskritChars: PhraseContent[] = [
   },
   {
     id: "sanskrit-om",
-    type: "phrase",
     difficulty: "advanced",
     thai: "ๆ",
     romanized: "máai-yammók",
@@ -137,7 +128,6 @@ const sanskritChars: PhraseContent[] = [
 const specialChars: PhraseContent[] = [
   {
     id: "number-indicator",
-    type: "phrase",
     difficulty: "advanced",
     thai: "ฯ",
     romanized: "páiyaannói",
@@ -150,7 +140,6 @@ const specialChars: PhraseContent[] = [
   },
   {
     id: "leader",
-    type: "phrase",
     difficulty: "advanced",
     thai: "ฯลฯ",
     romanized: "páiyaanyái",

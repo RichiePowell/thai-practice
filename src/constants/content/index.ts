@@ -15,10 +15,12 @@ import { timeAndCalendarContent } from "./timeAndCalendar";
 import { familyAndRelationshipsContent } from "./familyAndRelationships";
 import { colorsContent } from "./colors";
 import { questionWordsContent } from "./questionWords";
+import { commonWordsContent } from "./commonWords";
 
 export const CATEGORY_CONTENT: Partial<
   Record<LearningCategoryId, CategoryContent>
 > = {
+  "common-words": commonWordsContent,
   "common-phrases": commonPhrasesContent,
   "thai-script": thaiScriptContent,
   "thai-script-intermediate": thaiScriptIntermediateContent,

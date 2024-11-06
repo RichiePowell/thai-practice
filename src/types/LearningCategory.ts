@@ -13,7 +13,8 @@ export type LearningCategoryId =
   | "time-calendar"
   | "family-relationships"
   | "colors"
-  | "question-words";
+  | "question-words"
+  | "common-words";
 
 export interface LearningCategory {
   id: LearningCategoryId;

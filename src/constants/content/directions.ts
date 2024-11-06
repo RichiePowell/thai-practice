@@ -3,7 +3,6 @@ import type { CategoryContent, PhraseContent } from "@/types/ContentTypes";
 const directionPhrases: PhraseContent[] = [
   {
     id: "direction-1",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ไปทางไหน",
     romanized: "bpai taang nai",
@@ -11,7 +10,6 @@ const directionPhrases: PhraseContent[] = [
   },
   {
     id: "direction-2",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ตรงไป",
     romanized: "tróng bpai",
@@ -19,7 +17,6 @@ const directionPhrases: PhraseContent[] = [
   },
   {
     id: "direction-3",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เลี้ยวซ้าย",
     romanized: "lío sái",
@@ -27,7 +24,6 @@ const directionPhrases: PhraseContent[] = [
   },
   {
     id: "direction-4",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เลี้ยวขวา",
     romanized: "lío kăa",
@@ -35,7 +31,6 @@ const directionPhrases: PhraseContent[] = [
   },
   {
     id: "direction-5",
-    type: "phrase",
     difficulty: "beginner",
     thai: "อยู่ตรงนี้",
     romanized: "yùu tróng-ní",
@@ -43,7 +38,6 @@ const directionPhrases: PhraseContent[] = [
   },
   {
     id: "direction-6",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ไกลแค่ไหน",
     romanized: "gai kɛ̀ nai",
@@ -51,7 +45,6 @@ const directionPhrases: PhraseContent[] = [
   },
   {
     id: "direction-7",
-    type: "phrase",
     difficulty: "beginner",
     thai: "อยู่ใกล้ๆ",
     romanized: "yùu glai glai",
@@ -59,7 +52,6 @@ const directionPhrases: PhraseContent[] = [
   },
   {
     id: "direction-8",
-    type: "phrase",
     difficulty: "beginner",
     thai: "ไปจนสุดทาง",
     romanized: "bpai jon sùt taang",
@@ -67,7 +59,6 @@ const directionPhrases: PhraseContent[] = [
   },
   {
     id: "direction-9",
-    type: "phrase",
     difficulty: "beginner",
     thai: "อยู่ตรงข้ามกัน",
     romanized: "yùu tróng kăam gan",
@@ -75,7 +66,6 @@ const directionPhrases: PhraseContent[] = [
   },
   {
     id: "direction-10",
-    type: "phrase",
     difficulty: "beginner",
     thai: "เดินไปตามถนน",
     romanized: "dern bpai tam tà-nǒn",

@@ -3,7 +3,6 @@ import type { CategoryContent, PhraseContent } from "@/types/ContentTypes";
 const highClassConsonants: PhraseContent[] = [
   {
     id: "consonant-kh1",
-    type: "phrase",
     difficulty: "intermediate",
     thai: "ข",
     romanized: "khɔɔ-khài",
@@ -17,7 +16,6 @@ const highClassConsonants: PhraseContent[] = [
   },
   {
     id: "consonant-ch",
-    type: "phrase",
     difficulty: "intermediate",
     thai: "ฉ",
     romanized: "chɔɔ-chìng",
@@ -31,7 +29,6 @@ const highClassConsonants: PhraseContent[] = [
   },
   {
     id: "consonant-s1",
-    type: "phrase",
     difficulty: "intermediate",
     thai: "ส",
     romanized: "sɔɔ-sʉ̌a",
@@ -49,7 +46,6 @@ const highClassConsonants: PhraseContent[] = [
 const complexVowels: PhraseContent[] = [
   {
     id: "vowel-ae",
-    type: "phrase",
     difficulty: "intermediate",
     thai: "แ-ะ",
     romanized: "sara ae",
@@ -62,7 +58,6 @@ const complexVowels: PhraseContent[] = [
   },
   {
     id: "vowel-ae-long",
-    type: "phrase",
     difficulty: "intermediate",
     thai: "แ-",
     romanized: "sara ae",
@@ -75,7 +70,6 @@ const complexVowels: PhraseContent[] = [
   },
   {
     id: "vowel-oo",
-    type: "phrase",
     difficulty: "intermediate",
     thai: "ื-อ",
     romanized: "sara ʉʉ",
@@ -92,7 +86,6 @@ const complexVowels: PhraseContent[] = [
 const toneMarks: PhraseContent[] = [
   {
     id: "tone-falling",
-    type: "phrase",
     difficulty: "intermediate",
     thai: "้",
     romanized: "mai toh",
@@ -105,7 +98,6 @@ const toneMarks: PhraseContent[] = [
   },
   {
     id: "tone-high",
-    type: "phrase",
     difficulty: "intermediate",
     thai: "๊",
     romanized: "mai tri",
@@ -118,7 +110,6 @@ const toneMarks: PhraseContent[] = [
   },
   {
     id: "tone-rising",
-    type: "phrase",
     difficulty: "intermediate",
     thai: "๋",
     romanized: "mai chattawa",
