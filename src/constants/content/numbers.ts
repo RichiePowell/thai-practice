@@ -118,4 +118,7 @@ const numbers: PhraseContent[] = [
 export const numbersContent: CategoryContent = {
   categoryId: "numbers",
   items: numbers,
+  settings: {
+    restrictAnswersToCategory: true,
+  },
 };

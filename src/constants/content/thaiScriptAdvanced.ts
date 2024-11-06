@@ -160,4 +160,7 @@ export const thaiScriptAdvancedContent: CategoryContent = {
     ...sanskritChars,
     ...specialChars,
   ],
+  settings: {
+    restrictAnswersToCategory: true,
+  },
 };

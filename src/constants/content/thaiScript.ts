@@ -103,4 +103,7 @@ const simpleTones: PhraseContent[] = [
 export const thaiScriptContent: CategoryContent = {
   categoryId: "thai-script",
   items: [...consonants, ...vowels, ...simpleTones],
+  settings: {
+    restrictAnswersToCategory: true,
+  },
 };

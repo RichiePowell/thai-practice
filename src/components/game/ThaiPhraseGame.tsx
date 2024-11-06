@@ -163,21 +163,21 @@ export const ThaiPhraseGame = ({ initialSettings }: ThaiPhraseGameProps) => {
                 className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground"
               >
                 <RefreshCw className="w-4 h-4" />
-                Play Again with Same Categories
+                Play again with same categories
               </Button>
               <Button
                 onClick={() => setGameState("category-select")}
                 variant="outline"
                 className="w-full border-2 hover:bg-accent/10 dark:border-primary/30 dark:hover:border-primary dark:hover:bg-primary/10 dark:hover:text-white"
               >
-                Choose Different Categories
+                Choose different categories
               </Button>
               <Button
                 onClick={handleReturnToMenu}
                 variant="outline"
                 className="w-full border-2 hover:bg-accent/10 dark:border-primary/30 dark:hover:border-primary dark:hover:bg-primary/10 dark:hover:text-white"
               >
-                Return to Menu
+                Return to menu
               </Button>
             </div>
           </div>

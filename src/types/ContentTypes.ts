@@ -18,7 +18,13 @@ export type PhraseContent = BaseContent;
 
 export type ContentItem = PhraseContent;
 
+export interface CategorySettings {
+  restrictAnswersToCategory?: boolean;
+  allowMixedAnswers?: boolean;
+}
+
 export interface CategoryContent {
   categoryId: LearningCategoryId;
   items: ContentItem[];
+  settings?: CategorySettings;
 }

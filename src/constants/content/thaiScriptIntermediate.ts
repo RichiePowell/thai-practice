@@ -125,4 +125,7 @@ const toneMarks: PhraseContent[] = [
 export const thaiScriptIntermediateContent: CategoryContent = {
   categoryId: "thai-script-intermediate",
   items: [...highClassConsonants, ...complexVowels, ...toneMarks],
+  settings: {
+    restrictAnswersToCategory: true,
+  },
 };

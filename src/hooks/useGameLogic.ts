@@ -104,9 +104,57 @@ const useGameLogic = ({
       const category = findCategoryForItem(correct);
       setCurrentCategory(category);
 
-      // Get wrong options from all available items
-      const wrongOptions = allItemsRef.current
-        .filter((item) => item.id !== correct.id)
+      let wrongAnswerPool: ContentItem[] = [];
+
+      if (category) {
+        const categoryContent = CATEGORY_CONTENT[category.id];
+
+        if (categoryContent?.settings?.restrictAnswersToCategory) {
+          // If this category is restricted, only use answers from this category
+          wrongAnswerPool = categoryContent.items.filter(
+            (item) => item.id !== correct.id
+          );
+        } else {
+          // For unrestricted categories, we need to:
+          // 1. Exclude the current item
+          // 2. Only include items from the same category or other unrestricted categories
+          wrongAnswerPool = allItemsRef.current.filter((item) => {
+            // Skip the current item
+            if (item.id === correct.id) return false;
+
+            // Find the category of this potential answer
+            const itemCategory = findCategoryForItem(item);
+            if (!itemCategory) return false; // If we can't find the category, exclude it
+
+            const itemCategoryContent = CATEGORY_CONTENT[itemCategory.id];
+
+            // If the item's category is restricted, exclude it
+            if (itemCategoryContent?.settings?.restrictAnswersToCategory) {
+              return false;
+            }
+
+            // Include items from same category or other unrestricted categories
+            return true;
+          });
+        }
+      }
+
+      // Ensure we have enough wrong answers
+      if (wrongAnswerPool.length < 3) {
+        console.warn(
+          "Not enough wrong answers in pool:",
+          wrongAnswerPool.length
+        );
+        // Fallback to same category items if pool is too small
+        const categoryContent = CATEGORY_CONTENT[category?.id ?? ""];
+        if (categoryContent) {
+          wrongAnswerPool = categoryContent.items.filter(
+            (item) => item.id !== correct.id
+          );
+        }
+      }
+
+      const wrongOptions = wrongAnswerPool
         .sort(() => Math.random() - 0.5)
         .slice(0, 3);
 
