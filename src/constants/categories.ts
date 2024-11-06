@@ -15,14 +15,14 @@ const BEGINNER_CATEGORIES: LearningCategory[] = [
   {
     id: "common-words",
     title: "Common Words",
-    description: "Essential everyday expressions and greetings",
+    description: "Core Thai vocabulary for everyday use",
     icon: "Type",
     difficulty: "beginner",
   },
   {
     id: "common-phrases",
     title: "Common Phrases",
-    description: "Essential everyday expressions and greetings",
+    description: "Practical Thai conversational phrases",
     icon: "MessageSquare",
     difficulty: "beginner",
   },
