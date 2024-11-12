@@ -66,47 +66,38 @@ yarn dev
 
 ```
 src/
-├── app/
-│   ├── layout.tsx             # App layout component
-│   └── page.tsx               # Main app page
+├── app/                      # Next.js app directory
+│   ├── globals.css          # Global styles
+│   ├── layout.tsx           # Root layout
+│   └── page.tsx             # Main page
 ├── components/
-│   ├── game/                  # Game-related components
+│   ├── game/                # Game components
+│   │   ├── AudioToggle.tsx
 │   │   ├── CategorySelector.tsx
+│   │   ├── FilterBar.tsx
 │   │   ├── GameHeader.tsx
 │   │   ├── GameScreen.tsx
 │   │   ├── MainMenu.tsx
 │   │   ├── SettingsPanel.tsx
 │   │   ├── ThaiCharacterDisplay.tsx
-│   │   └── ThaiPhraseGame.tsx
-│   └── ui/                    # UI components
+│   │   ├── ThaiPhraseGame.tsx
+│   │   └── ThemeToggle.tsx
+│   └── ui/                  # Reusable UI components
 ├── constants/
-│   ├── categories.ts          # Learning category data
-│   ├── config.ts              # Game configuration
-│   ├── content/               # Content for each category
-│   │   ├── classifiers.ts
-│   │   ├── commonPhrases.ts
-│   │   ├── directions.ts
-│   │   ├── foodAndDrink.ts
-│   │   ├── index.ts
-│   │   ├── numbers.ts
-│   │   ├── pronouns.ts
-│   │   ├── thaiScript.ts
-│   │   ├── thaiScriptAdvanced.ts
-│   │   ├── thaiScriptIntermediate.ts
-│   │   └── travel.ts
-│   ├── phrases.ts             # Thai phrases data (legacy)
-│   └── settings.ts            # Default game settings
-├── context/
-│   └── AudioContext.tsx       # Audio context provider
-├── hooks/
-│   └── useGameLogic.ts        # Game logic hook
-└── types/                     # Type definitions
-    ├── ContentTypes.ts
-    ├── FeedbackType.ts
-    ├── GameSettings.ts
-    ├── LearningCategory.ts
-    ├── ThaiPhrase.ts
-    └── WrongAnswerType.ts
+│   ├── content/             # Learning content by category
+│   ├── categories.ts        # Category definitions
+│   ├── config.ts           # Game configuration
+│   └── settings.ts         # Default settings
+├── context/                # React context providers
+│   ├── AudioContext.tsx
+│   └── ThemeContext.tsx
+├── hooks/                  # Custom React hooks
+│   ├── useGameLogic.ts
+│   └── useSpeech.ts
+├── lib/                    # Utility functions
+│   ├── storage.ts
+│   └── utils.ts
+└── types/                  # TypeScript type definitions
 ```
 
 ## Game Features
