@@ -24,7 +24,7 @@ const FilterBar = ({
       {/* Filter buttons container */}
       <div className="flex items-center gap-2 flex-grow min-w-0 overflow-x-auto pb-2 sm:pb-0 scrollbar-none">
         <div className="flex-none flex items-center gap-2">
-          <Filter className="w-4 h-4 flex-none" />
+          <Filter className="w-4 h-4 flex-none mr-2" />
           <Button
             variant={difficulty === "all" ? "default" : "outline"}
             size="sm"
