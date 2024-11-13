@@ -27,6 +27,13 @@ const BEGINNER_CATEGORIES: LearningCategory[] = [
     difficulty: "beginner",
   },
   {
+    id: "question-words",
+    title: "Question Words",
+    description: "Master the essential words for asking questions in Thai",
+    icon: "HelpCircle",
+    difficulty: "beginner",
+  },
+  {
     id: "numbers",
     title: "Numbers & Counting",
     description: "Learn numbers, counting, and basic math terms",
@@ -52,13 +59,6 @@ const BEGINNER_CATEGORIES: LearningCategory[] = [
     title: "Colors",
     description: "Learn common colors and basic descriptive terms",
     icon: "Palette",
-    difficulty: "beginner",
-  },
-  {
-    id: "question-words",
-    title: "Question Words",
-    description: "Master the essential words for asking questions in Thai",
-    icon: "HelpCircle",
     difficulty: "beginner",
   },
 ];
