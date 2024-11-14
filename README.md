@@ -112,6 +112,7 @@ src/
 - Directions
 - Pronouns & Polite Particles
 - Classifiers
+- And more
 
 ### Customization
 
