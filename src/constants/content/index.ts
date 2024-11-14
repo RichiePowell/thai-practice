@@ -16,6 +16,8 @@ import { familyAndRelationshipsContent } from "./familyAndRelationships";
 import { colorsContent } from "./colors";
 import { questionWordsContent } from "./questionWords";
 import { commonWordsContent } from "./commonWords";
+import { advancedNumbersContent } from "./advancedNumbers";
+import { intermediateNumbersContent } from "./intermediateNumbers";
 
 export const CATEGORY_CONTENT: Partial<
   Record<LearningCategoryId, CategoryContent>
@@ -26,6 +28,8 @@ export const CATEGORY_CONTENT: Partial<
   "thai-script-intermediate": thaiScriptIntermediateContent,
   "thai-script-advanced": thaiScriptAdvancedContent,
   numbers: numbersContent,
+  "intermediate-numbers": intermediateNumbersContent,
+  "advanced-numbers": advancedNumbersContent,
   "food-drink": foodAndDrinkContent,
   travel: travelContent,
   pronouns: pronounsContent,

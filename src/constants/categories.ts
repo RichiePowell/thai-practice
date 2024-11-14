@@ -35,8 +35,8 @@ const BEGINNER_CATEGORIES: LearningCategory[] = [
   },
   {
     id: "numbers",
-    title: "Numbers & Counting",
-    description: "Learn numbers, counting, and basic math terms",
+    title: "Numbers",
+    description: "Learn numbers from 0 to 15 in Thai",
     icon: "Hash",
     difficulty: "beginner",
   },
@@ -72,6 +72,13 @@ const INTERMEDIATE_CATEGORIES: LearningCategory[] = [
     difficulty: "intermediate",
   },
   {
+    id: "intermediate-numbers",
+    title: "Intermediate Numbers",
+    description: "Learn numbers from 20 to 1,000 in Thai",
+    icon: "Hash",
+    difficulty: "intermediate",
+  },
+  {
     id: "travel",
     title: "Travel & Transport",
     description: "Navigate Thailand with essential travel vocabulary",
@@ -101,6 +108,13 @@ const ADVANCED_CATEGORIES: LearningCategory[] = [
     description:
       "Master rare characters, Sanskrit influences, and special symbols",
     icon: "BookText",
+    difficulty: "advanced",
+  },
+  {
+    id: "advanced-numbers",
+    title: "Advanced Numbers",
+    description: "Learn numbers from 2,000 to 1,000,000,000 in Thai",
+    icon: "Hash",
     difficulty: "advanced",
   },
   {

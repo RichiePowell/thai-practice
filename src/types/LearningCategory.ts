@@ -14,7 +14,9 @@ export type LearningCategoryId =
   | "family-relationships"
   | "colors"
   | "question-words"
-  | "common-words";
+  | "common-words"
+  | "intermediate-numbers"
+  | "advanced-numbers";
 
 export interface LearningCategory {
   id: LearningCategoryId;
