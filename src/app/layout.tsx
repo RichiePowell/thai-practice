@@ -1,4 +1,3 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import { AudioProvider } from "@/context/AudioContext";
 import { ThemeProvider } from "@/context/ThemeContext";
